@@ -66,7 +66,7 @@ class Authentication {
     return true;
   }
 
-
+/*
   static Future<bool> fetchAuthenticate(String username, String password) async {
     var bytesP = utf8.encode(password);
     var encodedP = sha512.convert(bytesP);
@@ -115,9 +115,9 @@ class Authentication {
       print(e);
       return false;
     }
-  }
+  }*/
 
-/*
+
   static Future<bool> fetchAuthenticate(String username, String password) async {
     var bytesP = utf8.encode(password);
     var encodedP = sha512.convert(bytesP);
@@ -149,6 +149,7 @@ class Authentication {
           'username': username,
           'password': encodedP.toString(),
         }),
+
       );
 
       print('Response status code: ${response.statusCode}');
@@ -156,6 +157,7 @@ class Authentication {
 
       if (response.statusCode == 200) {
         // Successful authentication
+
         return true;
       } else {
         // Authentication failed
@@ -167,7 +169,7 @@ class Authentication {
       return false;
     }
   }
-*/
+
 
 /*
   static Future<bool> fetchAuthenticate(String username, String password) async {
@@ -192,7 +194,7 @@ class Authentication {
       print(jsonDecode(response.body));
       String? a = response.headers['Set-Cookie'];
       print(a);
-      var b = response.headers['session::apdc'];
+      var b = response.headers['set-cookie'];
       print(b.toString());
       String? c = response.headers['cookie'];
       print(c);
