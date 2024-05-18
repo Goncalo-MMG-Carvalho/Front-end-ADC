@@ -81,7 +81,6 @@ class Authentication {
         options: Options(
           headers: <String, String>{
             'Content-Type': 'application/json',
-
           },
         ),
         data: jsonEncode(<String, String>{
@@ -95,11 +94,11 @@ class Authentication {
         Map<String, List<String>> headersMap = response.headers.map;
         print(headersMap);
 
-        String? setCookieHeader = headersMap['set-cookie']?.first ?? headersMap['Set-Cookie']?.first;
+        final setCookieHeader = headersMap['Set-Cookie'];
 
         print(response.data);
         var a = response.headers['set-cookie'];
-        print(a.toString());
+        print(a);
         var b = response.headers['Set-Cookie'];
         print(b.toString());
         var c = response.headers['cookie'];
