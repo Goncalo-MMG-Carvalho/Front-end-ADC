@@ -9,7 +9,10 @@ import 'package:cookie_jar/cookie_jar.dart';
 
 
 
+
 class Authentication {
+
+
   static bool isPasswordCompliant(String password, [int minLength = 8]) {
     //Null-safety ensures that password is never null
     if (password.isEmpty) {
@@ -63,13 +66,13 @@ class Authentication {
     return true;
   }
 
-/*
+
   static Future<bool> fetchAuthenticate(String username, String password) async {
     var bytesP = utf8.encode(password);
     var encodedP = sha512.convert(bytesP);
+    print(encodedP);
 
     final dio = Dio();
-    dio.options.withCredentials = true;
 
 
     try {
@@ -80,11 +83,10 @@ class Authentication {
             'Content-Type': 'application/json',
 
           },
-          withCredentials: true;
         ),
         data: jsonEncode(<String, String>{
           'username': username,
-          'password': encodedP.toString(),
+          'password': encodedP.toString()
         }),
       );
 
@@ -107,27 +109,24 @@ class Authentication {
         // Extract cookie from response headers
         return true;
       } else {
+        print(response.toString());
         return false;
       }
     } on DioError catch (e) {
       print(e);
       return false;
     }
-  }*/
+  }
 
-
+/*
   static Future<bool> fetchAuthenticate(String username, String password) async {
     var bytesP = utf8.encode(password);
     var encodedP = sha512.convert(bytesP);
 
-    final dio = Dio();
+    //final dio = Dio();
+    final Dio dio = Dio();
 
     dio.interceptors.add(InterceptorsWrapper(
-      onRequest: (options, handler) {
-        // Modify request headers to include credentials
-        options.headers['withCredentials'] = true;
-        return handler.next(options);
-      },
       onResponse: (response, handler) {
         // Process response to handle cookies
         final setCookieHeader = response.headers.map['Set-Cookie'];
@@ -137,6 +136,7 @@ class Authentication {
         return handler.next(response);
       },
     ));
+
 
     try {
       final response = await dio.post(
@@ -152,6 +152,9 @@ class Authentication {
         }),
       );
 
+      print('Response status code: ${response.statusCode}');
+      print('Response data: ${response.data}');
+
       if (response.statusCode == 200) {
         // Successful authentication
         return true;
@@ -165,9 +168,9 @@ class Authentication {
       return false;
     }
   }
+*/
 
-
-  /*
+/*
   static Future<bool> fetchAuthenticate(String username, String password) async {
     var bytesP = utf8.encode(password);
     var encodedP = sha512.convert(bytesP);
