@@ -66,7 +66,7 @@ class Authentication {
     return true;
   }
 
-/*
+
   static Future<bool> fetchAuthenticate(String username, String password) async {
     var bytesP = utf8.encode(password);
     var encodedP = sha512.convert(bytesP);
@@ -115,9 +115,9 @@ class Authentication {
       print(e);
       return false;
     }
-  }*/
+  }
 
-
+/*
   static Future<bool> fetchAuthenticate(String username, String password) async {
     var bytesP = utf8.encode(password);
     var encodedP = sha512.convert(bytesP);
@@ -169,7 +169,7 @@ class Authentication {
       return false;
     }
   }
-
+*/
 
 /*
   static Future<bool> fetchAuthenticate(String username, String password) async {
