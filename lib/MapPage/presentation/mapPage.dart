@@ -2,11 +2,13 @@ import 'package:adc_handson_session/AppPage/presentation/appPage_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:adc_handson_session/login/application/auth.dart';
 import 'package:adc_handson_session/login/presentation/main_page.dart';
+import '../../register/presentation/regist_screen.dart';
+
+import 'package:permission_handler/permission_handler.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:permission_handler/permission_handler.dart';
 
-import '../../register/presentation/regist_screen.dart';
 
 class MapPage extends StatefulWidget {
   const MapPage({super.key});
@@ -19,7 +21,8 @@ class _MapPage extends State<MapPage> {
 
   late GoogleMapController mapController;
   late LatLng _currentLocation;
-
+  bool gotLocation = false;
+  final _controller = TextEditingController();
 
   @override
   void initState() {
@@ -45,8 +48,42 @@ class _MapPage extends State<MapPage> {
         desiredAccuracy: LocationAccuracy.high);
     setState(() {
       _currentLocation = LatLng(position.latitude, position.longitude);
+      gotLocation = true;
     });
   }
+
+  Future<Location> getLocationFromAddress(String address) async {
+    try {
+      List<Location> locations = await locationFromAddress(address);
+      return locations.first;
+    } catch (e) {
+      throw Exception('Failed to get location');
+    }
+  }
+
+  void printLocationFromAddress() async {
+    Location location = await getLocationFromAddress("1600 Amphitheatre Parkway, Mountain View, CA");
+    print("Latitude: ${location.latitude}, Longitude: ${location.longitude}");
+  }
+
+  void _getLatLngFromAddress(String address) async {
+    try {
+      List<Location> locations = await locationFromAddress(address);
+      Location location = locations.first;
+      setState(() {
+        _currentLocation = LatLng(location.latitude, location.longitude);
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
 
 
 
@@ -76,16 +113,33 @@ class _MapPage extends State<MapPage> {
                 ),
                 backgroundColor: const Color.fromRGBO(248, 237, 227, 1),
                 body: Container(
-                  child: _currentLocation != null
-                      ? GoogleMap(
+                  child: gotLocation ?
+                  Column(
+                    children: [Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextField(
+                    controller: _controller,
+                    decoration: const InputDecoration(
+                      labelText: 'Enter location',
+                      border: OutlineInputBorder(),
+                    ),
+                    onSubmitted: (value){
+                      _getLatLngFromAddress(value);
+                    },
+                  ),
+                ),
+                Expanded(
+                  child: GoogleMap(
                     onMapCreated: _onMapCreated,
                     initialCameraPosition: CameraPosition(
                       target: _currentLocation,
-                      zoom: 11.0,
+                      zoom: 13.0,
                     ),
-                  )
-                      : Center(child: CircularProgressIndicator()),
-                ),
+                  ),
+                )
+                    ])
+                      : const Center(child: CircularProgressIndicator())
+                )
             )
         )
     );
