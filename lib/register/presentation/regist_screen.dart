@@ -11,10 +11,12 @@ import '../../login/presentation/main_page.dart';
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
 
-
   @override
   State<RegisterScreen> createState() => _RegisterScreen();
 }
+
+
+enum TipoConta { personal, business }
 
 class _RegisterScreen extends State<RegisterScreen>{
   late TextEditingController usernameController;
@@ -23,6 +25,8 @@ class _RegisterScreen extends State<RegisterScreen>{
   late TextEditingController nameController;
   late TextEditingController emailController;
   late TextEditingController ageController;
+  TipoConta? tipoContaSelecionado = TipoConta.personal;
+  //TipoConta? tipoContaSelecionado;
 
   @override
   void initState() {
@@ -37,7 +41,7 @@ class _RegisterScreen extends State<RegisterScreen>{
 
 
  void registerButtonPressed(String username, String password,
-     String confirmationPassword, String name, String email, String age ){
+     String confirmationPassword, String name, String email, String age, String tipo){
 
       bool usCompliant = Authentication.isUsernameCompliant(username);
       bool pwCompliant = Authentication.isPasswordCompliant(password);
@@ -45,7 +49,6 @@ class _RegisterScreen extends State<RegisterScreen>{
       bool nmCompliant = Authentication.isNameCompliant(name);
       bool emCompliant = Authentication.isEmailCompliant(email);
       bool agCopliant = Authentication.isAgeCompliant(age);
-
 
       if(!pwCompliant){
         showDialog(
@@ -173,7 +176,7 @@ class _RegisterScreen extends State<RegisterScreen>{
           },
         );
       }
-      else if(Authentication.registerUser(username, password, email, name, age)){
+      else if(Authentication.registerUser(username, password, email, name, age, tipo)){
         //PASSAR DEPOIS PARA UMA PAGINA ORIGINAL
         Navigator.push( //responsavel por passar para a outra pagina (mainScreen), pilha que empilha as paginas acessadas, podendo assim voltar a tras nas paginas
           context,
@@ -204,8 +207,6 @@ class _RegisterScreen extends State<RegisterScreen>{
       }
 
  }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -245,7 +246,7 @@ class _RegisterScreen extends State<RegisterScreen>{
                         padding: const EdgeInsets.fromLTRB(20, 10, 20, 70),
                         alignment: Alignment.center,
                         width: 350.0,
-                        height: 820.0,
+                        height: 920.0,
                         decoration:  BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
                             color: const Color.fromRGBO(248, 237, 227, 1),
@@ -360,7 +361,10 @@ class _RegisterScreen extends State<RegisterScreen>{
                                  ),
                                ),
                              ),
+                             Container(
+                               child: selectConta(),
 
+                             ),
                              Container(
                                  height: 80,
                                  padding: const EdgeInsets.fromLTRB(10,40,10,5),
@@ -381,7 +385,7 @@ class _RegisterScreen extends State<RegisterScreen>{
                                      ,),
                                    onPressed: () => registerButtonPressed(
                                        usernameController.text, passwordController.text, confPasswordController.text,
-                                        nameController.text, emailController.text/*, birthDate.text */, ageController.text),
+                                        nameController.text, emailController.text/*, birthDate.text */, ageController.text, tipoContaSelecionado.toString()),
                                  )),
                              TextButton(
                                onPressed: () {
@@ -413,4 +417,59 @@ class _RegisterScreen extends State<RegisterScreen>{
         ),
     );
   }
+
+
+  Widget selectConta(){
+    return Column(
+      children: <Widget>[
+        const Padding(padding: EdgeInsets.fromLTRB(30, 30, 20, 5),
+          child: Align(
+          alignment: Alignment.centerLeft,
+          child: Text(
+                "Tipo de conta:",
+              style: TextStyle(
+              fontFamily: 'Arial',
+              fontSize: 16,
+              ),
+          ),
+          ),
+        ),
+        Padding(padding: EdgeInsets.fromLTRB(20, 0, 20, 5),
+        child: RadioListTile<TipoConta>(
+          title: const Text('Personal'),
+          value: TipoConta.personal,
+          groupValue: tipoContaSelecionado,
+          activeColor: const Color.fromRGBO(121, 135, 119, 1),
+          onChanged: (TipoConta? value) {
+            setState(() {
+              tipoContaSelecionado = value;
+            });
+          },
+        ),
+        ),
+        Padding(padding: EdgeInsets.fromLTRB(20, 0, 20, 5),
+        child: RadioListTile<TipoConta>(
+          title: const Text('Business'),
+          value: TipoConta.business,
+          groupValue: tipoContaSelecionado,
+          activeColor: const Color.fromRGBO(121, 135, 119, 1),
+          onChanged: (TipoConta? value) {
+            setState(() {
+              tipoContaSelecionado = value;
+              print(tipoContaSelecionado);
+            });
+          },
+        ),
+        )
+      ],
+    );
+  }
+
+
 }
+
+
+
+
+
+

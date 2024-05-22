@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:adc_handson_session/register/presentation/regist_screen.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
@@ -83,10 +84,7 @@ class Authentication {
     return intAge > 18;
   }
 
-
-
-
-  static bool registerUser(String username, String password, String email, String name, String age,) {
+  static bool registerUser(String username, String password, String email, String name, String age, String tipo) {
     //  API Call to authenticate an user (GoogleAppEngine endpoint)
 
     // Note: hash passwords before sending them through the communication channel
@@ -98,15 +96,40 @@ class Authentication {
     // Use username: hbingley1 - password: CQutx25i8r
     // More info: https://dummyjson.com/docs/auth
 
-    fetchAuthenticate(username, name, password, email, age);
+    fetchAuthenticate(username, name, password, email, age, tipo);
 
     return true;
   }
 
   //A password tem de ir ja encriptada?
-  static Future<bool> fetchAuthenticate(String username, String name, String password, String email, String age) async {
+  static Future<bool> fetchAuthenticate(String username, String name, String password, String email, String age, String tipo) async {
     var bytesP = utf8.encode(password);
     var encodedP = sha512.convert(bytesP);
+
+    //print(tipo);
+
+    var tipoConta = tipo.split(".");
+    var json;
+
+    if(tipoConta[1] == "personal") {
+      json = jsonEncode(<String, String>{
+        'username': username,
+        'password': encodedP.toString(),
+        'email':email,
+        'idade': age,
+        'name': name,
+      });
+    }else {
+      json = jsonEncode(<String, String>{
+        'username': username,
+        'password': encodedP.toString(),
+        'email':email,
+        'idade': age,
+        'name': name,
+        'accountType': tipoConta[1]
+      });
+      print(tipoConta[1]);
+    }
 
     final response = await http.post(
       Uri.parse('https://projeto-adc-423314.ew.r.appspot.com/rest/register/v3'),
@@ -116,13 +139,7 @@ class Authentication {
         'Content-Type': 'application/json',
       },
 
-      body: jsonEncode(<String, String>{
-        'username': username,
-        'password': encodedP.toString(),
-        'email':email,
-        'idade': age,
-        'name': name,
-      }),
+      body: json
     );
 
     if (response.statusCode == 200) {
