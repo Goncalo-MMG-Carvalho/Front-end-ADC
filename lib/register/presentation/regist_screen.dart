@@ -205,7 +205,6 @@ class _RegisterScreen extends State<RegisterScreen>{
           },
         );
       }
-
  }
 
   @override
@@ -246,7 +245,7 @@ class _RegisterScreen extends State<RegisterScreen>{
                         padding: const EdgeInsets.fromLTRB(20, 10, 20, 70),
                         alignment: Alignment.center,
                         width: 350.0,
-                        height: 920.0,
+                        height: 1000.0,
                         decoration:  BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
                             color: const Color.fromRGBO(248, 237, 227, 1),

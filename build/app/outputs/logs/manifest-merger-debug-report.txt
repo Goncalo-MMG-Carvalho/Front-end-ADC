@@ -1,0 +1,225 @@
+-- Merging decision tree log ---
+application
+INJECTED from C:\Users\rmcg0\OneDrive\Documentos\GitHub\APDCFRONTEND\Front-end-ADC\android\app\src\main\AndroidManifest.xml:2:5-34:19
+MERGED from [com.google.android.gms:play-services-maps:18.2.0] C:\Users\rmcg0\.gradle\caches\transforms-3\a65138ca26b05295fba906c0baac8884\transformed\jetified-play-services-maps-18.2.0\AndroidManifest.xml:36:5-42:19
+MERGED from [com.google.android.gms:play-services-maps:18.2.0] C:\Users\rmcg0\.gradle\caches\transforms-3\a65138ca26b05295fba906c0baac8884\transformed\jetified-play-services-maps-18.2.0\AndroidManifest.xml:36:5-42:19
+MERGED from [com.google.android.gms:play-services-location:17.0.0] C:\Users\rmcg0\.gradle\caches\transforms-3\41f1877cdc011d702f30dc9f05115eb4\transformed\jetified-play-services-location-17.0.0\AndroidManifest.xml:7:5-20
+MERGED from [com.google.android.gms:play-services-location:17.0.0] C:\Users\rmcg0\.gradle\caches\transforms-3\41f1877cdc011d702f30dc9f05115eb4\transformed\jetified-play-services-location-17.0.0\AndroidManifest.xml:7:5-20
+MERGED from [com.google.android.gms:play-services-base:18.0.1] C:\Users\rmcg0\.gradle\caches\transforms-3\626bf728570bdd1407a1fab0c7f8546a\transformed\jetified-play-services-base-18.0.1\AndroidManifest.xml:19:5-23:19
+MERGED from [com.google.android.gms:play-services-base:18.0.1] C:\Users\rmcg0\.gradle\caches\transforms-3\626bf728570bdd1407a1fab0c7f8546a\transformed\jetified-play-services-base-18.0.1\AndroidManifest.xml:19:5-23:19
+MERGED from [com.google.android.gms:play-services-places-placereport:17.0.0] C:\Users\rmcg0\.gradle\caches\transforms-3\1aaef6e930e16bb6759ab4d04e6ec4e6\transformed\jetified-play-services-places-placereport-17.0.0\AndroidManifest.xml:22:5-20
+MERGED from [com.google.android.gms:play-services-places-placereport:17.0.0] C:\Users\rmcg0\.gradle\caches\transforms-3\1aaef6e930e16bb6759ab4d04e6ec4e6\transformed\jetified-play-services-places-placereport-17.0.0\AndroidManifest.xml:22:5-20
+MERGED from [com.google.android.gms:play-services-tasks:18.0.1] C:\Users\rmcg0\.gradle\caches\transforms-3\0d176289a2e93d5cb054c9262c195662\transformed\jetified-play-services-tasks-18.0.1\AndroidManifest.xml:5:5-20
+MERGED from [com.google.android.gms:play-services-tasks:18.0.1] C:\Users\rmcg0\.gradle\caches\transforms-3\0d176289a2e93d5cb054c9262c195662\transformed\jetified-play-services-tasks-18.0.1\AndroidManifest.xml:5:5-20
+MERGED from [com.google.android.gms:play-services-basement:18.0.0] C:\Users\rmcg0\.gradle\caches\transforms-3\c759bf6ebb566014e00373944d9fae65\transformed\jetified-play-services-basement-18.0.0\AndroidManifest.xml:20:5-24:19
+MERGED from [com.google.android.gms:play-services-basement:18.0.0] C:\Users\rmcg0\.gradle\caches\transforms-3\c759bf6ebb566014e00373944d9fae65\transformed\jetified-play-services-basement-18.0.0\AndroidManifest.xml:20:5-24:19
+MERGED from [androidx.window:window:1.0.0-beta04] C:\Users\rmcg0\.gradle\caches\transforms-3\d6c3216daf4e886289fdcc05982420e7\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:24:5-31:19
+MERGED from [androidx.window:window:1.0.0-beta04] C:\Users\rmcg0\.gradle\caches\transforms-3\d6c3216daf4e886289fdcc05982420e7\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:24:5-31:19
+MERGED from [androidx.core:core:1.6.0] C:\Users\rmcg0\.gradle\caches\transforms-3\4f29863a297bc09994df14096a14d74d\transformed\core-1.6.0\AndroidManifest.xml:24:5-89
+MERGED from [androidx.core:core:1.6.0] C:\Users\rmcg0\.gradle\caches\transforms-3\4f29863a297bc09994df14096a14d74d\transformed\core-1.6.0\AndroidManifest.xml:24:5-89
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\rmcg0\.gradle\caches\transforms-3\18a3017200c4ea1e64bb0e10af3beb85\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:24:5-25:19
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\rmcg0\.gradle\caches\transforms-3\18a3017200c4ea1e64bb0e10af3beb85\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:24:5-25:19
+MERGED from [com.google.maps.android:android-maps-utils:3.6.0] C:\Users\rmcg0\.gradle\caches\transforms-3\f9860017dbc4323156d37ed72f8b0cca\transformed\jetified-android-maps-utils-3.6.0\AndroidManifest.xml:7:5-11:19
+MERGED from [com.google.maps.android:android-maps-utils:3.6.0] C:\Users\rmcg0\.gradle\caches\transforms-3\f9860017dbc4323156d37ed72f8b0cca\transformed\jetified-android-maps-utils-3.6.0\AndroidManifest.xml:7:5-11:19
+	android:appComponentFactory
+		ADDED from [androidx.core:core:1.6.0] C:\Users\rmcg0\.gradle\caches\transforms-3\4f29863a297bc09994df14096a14d74d\transformed\core-1.6.0\AndroidManifest.xml:24:18-86
+	android:name
+		INJECTED from C:\Users\rmcg0\OneDrive\Documentos\GitHub\APDCFRONTEND\Front-end-ADC\android\app\src\main\AndroidManifest.xml
+manifest
+ADDED from C:\Users\rmcg0\OneDrive\Documentos\GitHub\APDCFRONTEND\Front-end-ADC\android\app\src\main\AndroidManifest.xml:1:1-50:12
+INJECTED from C:\Users\rmcg0\OneDrive\Documentos\GitHub\APDCFRONTEND\Front-end-ADC\android\app\src\main\AndroidManifest.xml:1:1-50:12
+INJECTED from C:\Users\rmcg0\OneDrive\Documentos\GitHub\APDCFRONTEND\Front-end-ADC\android\app\src\main\AndroidManifest.xml:1:1-50:12
+INJECTED from C:\Users\rmcg0\OneDrive\Documentos\GitHub\APDCFRONTEND\Front-end-ADC\android\app\src\main\AndroidManifest.xml:1:1-50:12
+MERGED from C:\Users\rmcg0\OneDrive\Documentos\GitHub\APDCFRONTEND\Front-end-ADC\android\app\src\main\AndroidManifest.xml:1:1-50:12
+MERGED from [:permission_handler_android] C:\Users\rmcg0\OneDrive\Documentos\GitHub\APDCFRONTEND\Front-end-ADC\build\permission_handler_android\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-9:12
+MERGED from [:google_maps_flutter_android] C:\Users\rmcg0\OneDrive\Documentos\GitHub\APDCFRONTEND\Front-end-ADC\build\google_maps_flutter_android\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-9:12
+MERGED from [:flutter_plugin_android_lifecycle] C:\Users\rmcg0\OneDrive\Documentos\GitHub\APDCFRONTEND\Front-end-ADC\build\flutter_plugin_android_lifecycle\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-9:12
+MERGED from [:geolocator_android] C:\Users\rmcg0\OneDrive\Documentos\GitHub\APDCFRONTEND\Front-end-ADC\build\geolocator_android\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-9:12
+MERGED from [:sqflite] C:\Users\rmcg0\OneDrive\Documentos\GitHub\APDCFRONTEND\Front-end-ADC\build\sqflite\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-9:12
+MERGED from [androidx.window:window-java:1.0.0-beta04] C:\Users\rmcg0\.gradle\caches\transforms-3\27f7fa8d4f9e9055da60c07618a86018\transformed\jetified-window-java-1.0.0-beta04\AndroidManifest.xml:17:1-23:12
+MERGED from [com.google.android.gms:play-services-maps:18.2.0] C:\Users\rmcg0\.gradle\caches\transforms-3\a65138ca26b05295fba906c0baac8884\transformed\jetified-play-services-maps-18.2.0\AndroidManifest.xml:17:1-44:12
+MERGED from [com.google.android.gms:play-services-location:17.0.0] C:\Users\rmcg0\.gradle\caches\transforms-3\41f1877cdc011d702f30dc9f05115eb4\transformed\jetified-play-services-location-17.0.0\AndroidManifest.xml:2:1-9:12
+MERGED from [com.google.android.gms:play-services-base:18.0.1] C:\Users\rmcg0\.gradle\caches\transforms-3\626bf728570bdd1407a1fab0c7f8546a\transformed\jetified-play-services-base-18.0.1\AndroidManifest.xml:16:1-24:12
+MERGED from [com.google.android.gms:play-services-places-placereport:17.0.0] C:\Users\rmcg0\.gradle\caches\transforms-3\1aaef6e930e16bb6759ab4d04e6ec4e6\transformed\jetified-play-services-places-placereport-17.0.0\AndroidManifest.xml:17:1-24:12
+MERGED from [com.google.android.gms:play-services-tasks:18.0.1] C:\Users\rmcg0\.gradle\caches\transforms-3\0d176289a2e93d5cb054c9262c195662\transformed\jetified-play-services-tasks-18.0.1\AndroidManifest.xml:2:1-6:12
+MERGED from [com.google.android.gms:play-services-basement:18.0.0] C:\Users\rmcg0\.gradle\caches\transforms-3\c759bf6ebb566014e00373944d9fae65\transformed\jetified-play-services-basement-18.0.0\AndroidManifest.xml:16:1-26:12
+MERGED from [androidx.fragment:fragment:1.1.0] C:\Users\rmcg0\.gradle\caches\transforms-3\d3cdafde3a8feb28e5ecc8cce2b29189\transformed\fragment-1.1.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\rmcg0\.gradle\caches\transforms-3\ab6380571394533febb50bedc7ad0813\transformed\viewpager-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.loader:loader:1.0.0] C:\Users\rmcg0\.gradle\caches\transforms-3\4c8044c9ddceb2f290d1dbdc79df63f2\transformed\loader-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.activity:activity:1.0.0] C:\Users\rmcg0\.gradle\caches\transforms-3\878f41994fccf9f33c1f34bb7622bd34\transformed\jetified-activity-1.0.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.window:window:1.0.0-beta04] C:\Users\rmcg0\.gradle\caches\transforms-3\d6c3216daf4e886289fdcc05982420e7\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:17:1-33:12
+MERGED from [androidx.customview:customview:1.0.0] C:\Users\rmcg0\.gradle\caches\transforms-3\026b05b73ff595fd064ce92d7a2f749b\transformed\customview-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.core:core:1.6.0] C:\Users\rmcg0\.gradle\caches\transforms-3\4f29863a297bc09994df14096a14d74d\transformed\core-1.6.0\AndroidManifest.xml:17:1-26:12
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.2.0] C:\Users\rmcg0\.gradle\caches\transforms-3\13c9eaeb600220ed3fd9e0795e56d268\transformed\lifecycle-runtime-2.2.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.savedstate:savedstate:1.0.0] C:\Users\rmcg0\.gradle\caches\transforms-3\69038574613bc59fa5d098b47e1e9801\transformed\jetified-savedstate-1.0.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] C:\Users\rmcg0\.gradle\caches\transforms-3\50c874015698c2a91bbd7ffa83880d59\transformed\lifecycle-livedata-2.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.0.0] C:\Users\rmcg0\.gradle\caches\transforms-3\81f196c12f45b36165fbbab469f52760\transformed\lifecycle-livedata-core-2.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.tracing:tracing:1.0.0] C:\Users\rmcg0\.gradle\caches\transforms-3\a19c0a918ffb575defd970eda5c33bde\transformed\jetified-tracing-1.0.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.arch.core:core-runtime:2.0.0] C:\Users\rmcg0\.gradle\caches\transforms-3\2627f8d2eedbc92449550b52e18ba0e6\transformed\core-runtime-2.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\rmcg0\.gradle\caches\transforms-3\18a3017200c4ea1e64bb0e10af3beb85\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:17:1-27:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.1.0] C:\Users\rmcg0\.gradle\caches\transforms-3\780d650f40d6963ee79bce55925f6eb2\transformed\lifecycle-viewmodel-2.1.0\AndroidManifest.xml:17:1-22:12
+MERGED from [com.google.maps.android:android-maps-utils:3.6.0] C:\Users\rmcg0\.gradle\caches\transforms-3\f9860017dbc4323156d37ed72f8b0cca\transformed\jetified-android-maps-utils-3.6.0\AndroidManifest.xml:2:1-13:12
+MERGED from [androidx.annotation:annotation-experimental:1.1.0] C:\Users\rmcg0\.gradle\caches\transforms-3\d2fd5337d2096c1b6044d06d2bbcc696\transformed\jetified-annotation-experimental-1.1.0\AndroidManifest.xml:17:1-24:12
+INJECTED from C:\Users\rmcg0\OneDrive\Documentos\GitHub\APDCFRONTEND\Front-end-ADC\android\app\src\debug\AndroidManifest.xml:1:1-7:12
+INJECTED from C:\Users\rmcg0\OneDrive\Documentos\GitHub\APDCFRONTEND\Front-end-ADC\android\app\src\debug\AndroidManifest.xml:1:1-7:12
+INJECTED from C:\Users\rmcg0\OneDrive\Documentos\GitHub\APDCFRONTEND\Front-end-ADC\android\app\src\debug\AndroidManifest.xml:1:1-7:12
+	package
+		INJECTED from C:\Users\rmcg0\OneDrive\Documentos\GitHub\APDCFRONTEND\Front-end-ADC\android\app\src\main\AndroidManifest.xml
+		ADDED from C:\Users\rmcg0\OneDrive\Documentos\GitHub\APDCFRONTEND\Front-end-ADC\android\app\src\main\AndroidManifest.xml:1:1-50:12
+		INJECTED from C:\Users\rmcg0\OneDrive\Documentos\GitHub\APDCFRONTEND\Front-end-ADC\android\app\src\debug\AndroidManifest.xml
+	android:versionName
+		INJECTED from C:\Users\rmcg0\OneDrive\Documentos\GitHub\APDCFRONTEND\Front-end-ADC\android\app\src\main\AndroidManifest.xml
+		ADDED from C:\Users\rmcg0\OneDrive\Documentos\GitHub\APDCFRONTEND\Front-end-ADC\android\app\src\main\AndroidManifest.xml:1:1-50:12
+		INJECTED from C:\Users\rmcg0\OneDrive\Documentos\GitHub\APDCFRONTEND\Front-end-ADC\android\app\src\debug\AndroidManifest.xml
+	android:versionCode
+		INJECTED from C:\Users\rmcg0\OneDrive\Documentos\GitHub\APDCFRONTEND\Front-end-ADC\android\app\src\main\AndroidManifest.xml
+		ADDED from C:\Users\rmcg0\OneDrive\Documentos\GitHub\APDCFRONTEND\Front-end-ADC\android\app\src\main\AndroidManifest.xml:1:1-50:12
+		INJECTED from C:\Users\rmcg0\OneDrive\Documentos\GitHub\APDCFRONTEND\Front-end-ADC\android\app\src\debug\AndroidManifest.xml
+	xmlns:android
+		ADDED from C:\Users\rmcg0\OneDrive\Documentos\GitHub\APDCFRONTEND\Front-end-ADC\android\app\src\main\AndroidManifest.xml:1:11-69
+uses-permission#android.permission.ACCESS_FINE_LOCATION
+ADDED from C:\Users\rmcg0\OneDrive\Documentos\GitHub\APDCFRONTEND\Front-end-ADC\android\app\src\main\AndroidManifest.xml:36:5-79
+	android:name
+		ADDED from C:\Users\rmcg0\OneDrive\Documentos\GitHub\APDCFRONTEND\Front-end-ADC\android\app\src\main\AndroidManifest.xml:36:22-76
+uses-permission#android.permission.ACCESS_COARSE_LOCATION
+ADDED from C:\Users\rmcg0\OneDrive\Documentos\GitHub\APDCFRONTEND\Front-end-ADC\android\app\src\main\AndroidManifest.xml:37:5-81
+	android:name
+		ADDED from C:\Users\rmcg0\OneDrive\Documentos\GitHub\APDCFRONTEND\Front-end-ADC\android\app\src\main\AndroidManifest.xml:37:22-78
+queries
+ADDED from C:\Users\rmcg0\OneDrive\Documentos\GitHub\APDCFRONTEND\Front-end-ADC\android\app\src\main\AndroidManifest.xml:44:5-49:15
+MERGED from [com.google.android.gms:play-services-maps:18.2.0] C:\Users\rmcg0\.gradle\caches\transforms-3\a65138ca26b05295fba906c0baac8884\transformed\jetified-play-services-maps-18.2.0\AndroidManifest.xml:30:5-34:15
+MERGED from [com.google.android.gms:play-services-maps:18.2.0] C:\Users\rmcg0\.gradle\caches\transforms-3\a65138ca26b05295fba906c0baac8884\transformed\jetified-play-services-maps-18.2.0\AndroidManifest.xml:30:5-34:15
+intent#action:name:android.intent.action.PROCESS_TEXT+data:mimeType:text/plain
+ADDED from C:\Users\rmcg0\OneDrive\Documentos\GitHub\APDCFRONTEND\Front-end-ADC\android\app\src\main\AndroidManifest.xml:45:9-48:18
+action#android.intent.action.PROCESS_TEXT
+ADDED from C:\Users\rmcg0\OneDrive\Documentos\GitHub\APDCFRONTEND\Front-end-ADC\android\app\src\main\AndroidManifest.xml:46:13-72
+	android:name
+		ADDED from C:\Users\rmcg0\OneDrive\Documentos\GitHub\APDCFRONTEND\Front-end-ADC\android\app\src\main\AndroidManifest.xml:46:21-70
+data
+ADDED from C:\Users\rmcg0\OneDrive\Documentos\GitHub\APDCFRONTEND\Front-end-ADC\android\app\src\main\AndroidManifest.xml:47:13-50
+	android:mimeType
+		ADDED from C:\Users\rmcg0\OneDrive\Documentos\GitHub\APDCFRONTEND\Front-end-ADC\android\app\src\main\AndroidManifest.xml:47:19-48
+uses-sdk
+INJECTED from C:\Users\rmcg0\OneDrive\Documentos\GitHub\APDCFRONTEND\Front-end-ADC\android\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from C:\Users\rmcg0\OneDrive\Documentos\GitHub\APDCFRONTEND\Front-end-ADC\android\app\src\main\AndroidManifest.xml
+INJECTED from C:\Users\rmcg0\OneDrive\Documentos\GitHub\APDCFRONTEND\Front-end-ADC\android\app\src\main\AndroidManifest.xml
+MERGED from [:permission_handler_android] C:\Users\rmcg0\OneDrive\Documentos\GitHub\APDCFRONTEND\Front-end-ADC\build\permission_handler_android\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
+MERGED from [:permission_handler_android] C:\Users\rmcg0\OneDrive\Documentos\GitHub\APDCFRONTEND\Front-end-ADC\build\permission_handler_android\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
+MERGED from [:google_maps_flutter_android] C:\Users\rmcg0\OneDrive\Documentos\GitHub\APDCFRONTEND\Front-end-ADC\build\google_maps_flutter_android\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
+MERGED from [:google_maps_flutter_android] C:\Users\rmcg0\OneDrive\Documentos\GitHub\APDCFRONTEND\Front-end-ADC\build\google_maps_flutter_android\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
+MERGED from [:flutter_plugin_android_lifecycle] C:\Users\rmcg0\OneDrive\Documentos\GitHub\APDCFRONTEND\Front-end-ADC\build\flutter_plugin_android_lifecycle\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
+MERGED from [:flutter_plugin_android_lifecycle] C:\Users\rmcg0\OneDrive\Documentos\GitHub\APDCFRONTEND\Front-end-ADC\build\flutter_plugin_android_lifecycle\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
+MERGED from [:geolocator_android] C:\Users\rmcg0\OneDrive\Documentos\GitHub\APDCFRONTEND\Front-end-ADC\build\geolocator_android\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
+MERGED from [:geolocator_android] C:\Users\rmcg0\OneDrive\Documentos\GitHub\APDCFRONTEND\Front-end-ADC\build\geolocator_android\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
+MERGED from [:sqflite] C:\Users\rmcg0\OneDrive\Documentos\GitHub\APDCFRONTEND\Front-end-ADC\build\sqflite\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
+MERGED from [:sqflite] C:\Users\rmcg0\OneDrive\Documentos\GitHub\APDCFRONTEND\Front-end-ADC\build\sqflite\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
+MERGED from [androidx.window:window-java:1.0.0-beta04] C:\Users\rmcg0\.gradle\caches\transforms-3\27f7fa8d4f9e9055da60c07618a86018\transformed\jetified-window-java-1.0.0-beta04\AndroidManifest.xml:19:5-21:41
+MERGED from [androidx.window:window-java:1.0.0-beta04] C:\Users\rmcg0\.gradle\caches\transforms-3\27f7fa8d4f9e9055da60c07618a86018\transformed\jetified-window-java-1.0.0-beta04\AndroidManifest.xml:19:5-21:41
+MERGED from [com.google.android.gms:play-services-maps:18.2.0] C:\Users\rmcg0\.gradle\caches\transforms-3\a65138ca26b05295fba906c0baac8884\transformed\jetified-play-services-maps-18.2.0\AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-maps:18.2.0] C:\Users\rmcg0\.gradle\caches\transforms-3\a65138ca26b05295fba906c0baac8884\transformed\jetified-play-services-maps-18.2.0\AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-location:17.0.0] C:\Users\rmcg0\.gradle\caches\transforms-3\41f1877cdc011d702f30dc9f05115eb4\transformed\jetified-play-services-location-17.0.0\AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-location:17.0.0] C:\Users\rmcg0\.gradle\caches\transforms-3\41f1877cdc011d702f30dc9f05115eb4\transformed\jetified-play-services-location-17.0.0\AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-base:18.0.1] C:\Users\rmcg0\.gradle\caches\transforms-3\626bf728570bdd1407a1fab0c7f8546a\transformed\jetified-play-services-base-18.0.1\AndroidManifest.xml:18:5-43
+MERGED from [com.google.android.gms:play-services-base:18.0.1] C:\Users\rmcg0\.gradle\caches\transforms-3\626bf728570bdd1407a1fab0c7f8546a\transformed\jetified-play-services-base-18.0.1\AndroidManifest.xml:18:5-43
+MERGED from [com.google.android.gms:play-services-places-placereport:17.0.0] C:\Users\rmcg0\.gradle\caches\transforms-3\1aaef6e930e16bb6759ab4d04e6ec4e6\transformed\jetified-play-services-places-placereport-17.0.0\AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-places-placereport:17.0.0] C:\Users\rmcg0\.gradle\caches\transforms-3\1aaef6e930e16bb6759ab4d04e6ec4e6\transformed\jetified-play-services-places-placereport-17.0.0\AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-tasks:18.0.1] C:\Users\rmcg0\.gradle\caches\transforms-3\0d176289a2e93d5cb054c9262c195662\transformed\jetified-play-services-tasks-18.0.1\AndroidManifest.xml:4:5-43
+MERGED from [com.google.android.gms:play-services-tasks:18.0.1] C:\Users\rmcg0\.gradle\caches\transforms-3\0d176289a2e93d5cb054c9262c195662\transformed\jetified-play-services-tasks-18.0.1\AndroidManifest.xml:4:5-43
+MERGED from [com.google.android.gms:play-services-basement:18.0.0] C:\Users\rmcg0\.gradle\caches\transforms-3\c759bf6ebb566014e00373944d9fae65\transformed\jetified-play-services-basement-18.0.0\AndroidManifest.xml:18:5-43
+MERGED from [com.google.android.gms:play-services-basement:18.0.0] C:\Users\rmcg0\.gradle\caches\transforms-3\c759bf6ebb566014e00373944d9fae65\transformed\jetified-play-services-basement-18.0.0\AndroidManifest.xml:18:5-43
+MERGED from [androidx.fragment:fragment:1.1.0] C:\Users\rmcg0\.gradle\caches\transforms-3\d3cdafde3a8feb28e5ecc8cce2b29189\transformed\fragment-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.fragment:fragment:1.1.0] C:\Users\rmcg0\.gradle\caches\transforms-3\d3cdafde3a8feb28e5ecc8cce2b29189\transformed\fragment-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\rmcg0\.gradle\caches\transforms-3\ab6380571394533febb50bedc7ad0813\transformed\viewpager-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\rmcg0\.gradle\caches\transforms-3\ab6380571394533febb50bedc7ad0813\transformed\viewpager-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.loader:loader:1.0.0] C:\Users\rmcg0\.gradle\caches\transforms-3\4c8044c9ddceb2f290d1dbdc79df63f2\transformed\loader-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.loader:loader:1.0.0] C:\Users\rmcg0\.gradle\caches\transforms-3\4c8044c9ddceb2f290d1dbdc79df63f2\transformed\loader-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.activity:activity:1.0.0] C:\Users\rmcg0\.gradle\caches\transforms-3\878f41994fccf9f33c1f34bb7622bd34\transformed\jetified-activity-1.0.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.activity:activity:1.0.0] C:\Users\rmcg0\.gradle\caches\transforms-3\878f41994fccf9f33c1f34bb7622bd34\transformed\jetified-activity-1.0.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.window:window:1.0.0-beta04] C:\Users\rmcg0\.gradle\caches\transforms-3\d6c3216daf4e886289fdcc05982420e7\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.window:window:1.0.0-beta04] C:\Users\rmcg0\.gradle\caches\transforms-3\d6c3216daf4e886289fdcc05982420e7\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.customview:customview:1.0.0] C:\Users\rmcg0\.gradle\caches\transforms-3\026b05b73ff595fd064ce92d7a2f749b\transformed\customview-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.customview:customview:1.0.0] C:\Users\rmcg0\.gradle\caches\transforms-3\026b05b73ff595fd064ce92d7a2f749b\transformed\customview-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.core:core:1.6.0] C:\Users\rmcg0\.gradle\caches\transforms-3\4f29863a297bc09994df14096a14d74d\transformed\core-1.6.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.core:core:1.6.0] C:\Users\rmcg0\.gradle\caches\transforms-3\4f29863a297bc09994df14096a14d74d\transformed\core-1.6.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.2.0] C:\Users\rmcg0\.gradle\caches\transforms-3\13c9eaeb600220ed3fd9e0795e56d268\transformed\lifecycle-runtime-2.2.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.2.0] C:\Users\rmcg0\.gradle\caches\transforms-3\13c9eaeb600220ed3fd9e0795e56d268\transformed\lifecycle-runtime-2.2.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.savedstate:savedstate:1.0.0] C:\Users\rmcg0\.gradle\caches\transforms-3\69038574613bc59fa5d098b47e1e9801\transformed\jetified-savedstate-1.0.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.savedstate:savedstate:1.0.0] C:\Users\rmcg0\.gradle\caches\transforms-3\69038574613bc59fa5d098b47e1e9801\transformed\jetified-savedstate-1.0.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] C:\Users\rmcg0\.gradle\caches\transforms-3\50c874015698c2a91bbd7ffa83880d59\transformed\lifecycle-livedata-2.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] C:\Users\rmcg0\.gradle\caches\transforms-3\50c874015698c2a91bbd7ffa83880d59\transformed\lifecycle-livedata-2.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.0.0] C:\Users\rmcg0\.gradle\caches\transforms-3\81f196c12f45b36165fbbab469f52760\transformed\lifecycle-livedata-core-2.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.0.0] C:\Users\rmcg0\.gradle\caches\transforms-3\81f196c12f45b36165fbbab469f52760\transformed\lifecycle-livedata-core-2.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.tracing:tracing:1.0.0] C:\Users\rmcg0\.gradle\caches\transforms-3\a19c0a918ffb575defd970eda5c33bde\transformed\jetified-tracing-1.0.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.tracing:tracing:1.0.0] C:\Users\rmcg0\.gradle\caches\transforms-3\a19c0a918ffb575defd970eda5c33bde\transformed\jetified-tracing-1.0.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.arch.core:core-runtime:2.0.0] C:\Users\rmcg0\.gradle\caches\transforms-3\2627f8d2eedbc92449550b52e18ba0e6\transformed\core-runtime-2.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.arch.core:core-runtime:2.0.0] C:\Users\rmcg0\.gradle\caches\transforms-3\2627f8d2eedbc92449550b52e18ba0e6\transformed\core-runtime-2.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\rmcg0\.gradle\caches\transforms-3\18a3017200c4ea1e64bb0e10af3beb85\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\rmcg0\.gradle\caches\transforms-3\18a3017200c4ea1e64bb0e10af3beb85\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.1.0] C:\Users\rmcg0\.gradle\caches\transforms-3\780d650f40d6963ee79bce55925f6eb2\transformed\lifecycle-viewmodel-2.1.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.1.0] C:\Users\rmcg0\.gradle\caches\transforms-3\780d650f40d6963ee79bce55925f6eb2\transformed\lifecycle-viewmodel-2.1.0\AndroidManifest.xml:20:5-44
+MERGED from [com.google.maps.android:android-maps-utils:3.6.0] C:\Users\rmcg0\.gradle\caches\transforms-3\f9860017dbc4323156d37ed72f8b0cca\transformed\jetified-android-maps-utils-3.6.0\AndroidManifest.xml:5:5-44
+MERGED from [com.google.maps.android:android-maps-utils:3.6.0] C:\Users\rmcg0\.gradle\caches\transforms-3\f9860017dbc4323156d37ed72f8b0cca\transformed\jetified-android-maps-utils-3.6.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.annotation:annotation-experimental:1.1.0] C:\Users\rmcg0\.gradle\caches\transforms-3\d2fd5337d2096c1b6044d06d2bbcc696\transformed\jetified-annotation-experimental-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.annotation:annotation-experimental:1.1.0] C:\Users\rmcg0\.gradle\caches\transforms-3\d2fd5337d2096c1b6044d06d2bbcc696\transformed\jetified-annotation-experimental-1.1.0\AndroidManifest.xml:20:5-22:41
+INJECTED from C:\Users\rmcg0\OneDrive\Documentos\GitHub\APDCFRONTEND\Front-end-ADC\android\app\src\debug\AndroidManifest.xml
+INJECTED from C:\Users\rmcg0\OneDrive\Documentos\GitHub\APDCFRONTEND\Front-end-ADC\android\app\src\debug\AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from C:\Users\rmcg0\OneDrive\Documentos\GitHub\APDCFRONTEND\Front-end-ADC\android\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\rmcg0\OneDrive\Documentos\GitHub\APDCFRONTEND\Front-end-ADC\android\app\src\debug\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from C:\Users\rmcg0\OneDrive\Documentos\GitHub\APDCFRONTEND\Front-end-ADC\android\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\rmcg0\OneDrive\Documentos\GitHub\APDCFRONTEND\Front-end-ADC\android\app\src\debug\AndroidManifest.xml
+uses-permission#android.permission.INTERNET
+ADDED from C:\Users\rmcg0\OneDrive\Documentos\GitHub\APDCFRONTEND\Front-end-ADC\android\app\src\debug\AndroidManifest.xml:6:5-66
+MERGED from [com.google.android.gms:play-services-maps:18.2.0] C:\Users\rmcg0\.gradle\caches\transforms-3\a65138ca26b05295fba906c0baac8884\transformed\jetified-play-services-maps-18.2.0\AndroidManifest.xml:24:5-67
+MERGED from [com.google.android.gms:play-services-maps:18.2.0] C:\Users\rmcg0\.gradle\caches\transforms-3\a65138ca26b05295fba906c0baac8884\transformed\jetified-play-services-maps-18.2.0\AndroidManifest.xml:24:5-67
+	android:name
+		ADDED from C:\Users\rmcg0\OneDrive\Documentos\GitHub\APDCFRONTEND\Front-end-ADC\android\app\src\debug\AndroidManifest.xml:6:22-64
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from [com.google.android.gms:play-services-maps:18.2.0] C:\Users\rmcg0\.gradle\caches\transforms-3\a65138ca26b05295fba906c0baac8884\transformed\jetified-play-services-maps-18.2.0\AndroidManifest.xml:23:5-79
+	android:name
+		ADDED from [com.google.android.gms:play-services-maps:18.2.0] C:\Users\rmcg0\.gradle\caches\transforms-3\a65138ca26b05295fba906c0baac8884\transformed\jetified-play-services-maps-18.2.0\AndroidManifest.xml:23:22-76
+uses-feature#0x00020000
+ADDED from [com.google.android.gms:play-services-maps:18.2.0] C:\Users\rmcg0\.gradle\caches\transforms-3\a65138ca26b05295fba906c0baac8884\transformed\jetified-play-services-maps-18.2.0\AndroidManifest.xml:26:5-28:35
+	android:glEsVersion
+		ADDED from [com.google.android.gms:play-services-maps:18.2.0] C:\Users\rmcg0\.gradle\caches\transforms-3\a65138ca26b05295fba906c0baac8884\transformed\jetified-play-services-maps-18.2.0\AndroidManifest.xml:27:9-41
+	android:required
+		ADDED from [com.google.android.gms:play-services-maps:18.2.0] C:\Users\rmcg0\.gradle\caches\transforms-3\a65138ca26b05295fba906c0baac8884\transformed\jetified-play-services-maps-18.2.0\AndroidManifest.xml:28:9-32
+package#com.google.android.apps.maps
+ADDED from [com.google.android.gms:play-services-maps:18.2.0] C:\Users\rmcg0\.gradle\caches\transforms-3\a65138ca26b05295fba906c0baac8884\transformed\jetified-play-services-maps-18.2.0\AndroidManifest.xml:33:9-64
+	android:name
+		ADDED from [com.google.android.gms:play-services-maps:18.2.0] C:\Users\rmcg0\.gradle\caches\transforms-3\a65138ca26b05295fba906c0baac8884\transformed\jetified-play-services-maps-18.2.0\AndroidManifest.xml:33:18-61
+uses-library#org.apache.http.legacy
+ADDED from [com.google.android.gms:play-services-maps:18.2.0] C:\Users\rmcg0\.gradle\caches\transforms-3\a65138ca26b05295fba906c0baac8884\transformed\jetified-play-services-maps-18.2.0\AndroidManifest.xml:39:9-41:40
+	android:required
+		ADDED from [com.google.android.gms:play-services-maps:18.2.0] C:\Users\rmcg0\.gradle\caches\transforms-3\a65138ca26b05295fba906c0baac8884\transformed\jetified-play-services-maps-18.2.0\AndroidManifest.xml:41:13-37
+	android:name
+		ADDED from [com.google.android.gms:play-services-maps:18.2.0] C:\Users\rmcg0\.gradle\caches\transforms-3\a65138ca26b05295fba906c0baac8884\transformed\jetified-play-services-maps-18.2.0\AndroidManifest.xml:40:13-50
+activity#com.google.android.gms.common.api.GoogleApiActivity
+ADDED from [com.google.android.gms:play-services-base:18.0.1] C:\Users\rmcg0\.gradle\caches\transforms-3\626bf728570bdd1407a1fab0c7f8546a\transformed\jetified-play-services-base-18.0.1\AndroidManifest.xml:20:9-22:45
+	android:exported
+		ADDED from [com.google.android.gms:play-services-base:18.0.1] C:\Users\rmcg0\.gradle\caches\transforms-3\626bf728570bdd1407a1fab0c7f8546a\transformed\jetified-play-services-base-18.0.1\AndroidManifest.xml:22:19-43
+	android:theme
+		ADDED from [com.google.android.gms:play-services-base:18.0.1] C:\Users\rmcg0\.gradle\caches\transforms-3\626bf728570bdd1407a1fab0c7f8546a\transformed\jetified-play-services-base-18.0.1\AndroidManifest.xml:21:19-78
+	android:name
+		ADDED from [com.google.android.gms:play-services-base:18.0.1] C:\Users\rmcg0\.gradle\caches\transforms-3\626bf728570bdd1407a1fab0c7f8546a\transformed\jetified-play-services-base-18.0.1\AndroidManifest.xml:20:19-85
+meta-data#com.google.android.gms.version
+ADDED from [com.google.android.gms:play-services-basement:18.0.0] C:\Users\rmcg0\.gradle\caches\transforms-3\c759bf6ebb566014e00373944d9fae65\transformed\jetified-play-services-basement-18.0.0\AndroidManifest.xml:21:9-23:69
+MERGED from [com.google.maps.android:android-maps-utils:3.6.0] C:\Users\rmcg0\.gradle\caches\transforms-3\f9860017dbc4323156d37ed72f8b0cca\transformed\jetified-android-maps-utils-3.6.0\AndroidManifest.xml:8:9-10:69
+MERGED from [com.google.maps.android:android-maps-utils:3.6.0] C:\Users\rmcg0\.gradle\caches\transforms-3\f9860017dbc4323156d37ed72f8b0cca\transformed\jetified-android-maps-utils-3.6.0\AndroidManifest.xml:8:9-10:69
+	android:value
+		ADDED from [com.google.android.gms:play-services-basement:18.0.0] C:\Users\rmcg0\.gradle\caches\transforms-3\c759bf6ebb566014e00373944d9fae65\transformed\jetified-play-services-basement-18.0.0\AndroidManifest.xml:23:13-66
+	android:name
+		ADDED from [com.google.android.gms:play-services-basement:18.0.0] C:\Users\rmcg0\.gradle\caches\transforms-3\c759bf6ebb566014e00373944d9fae65\transformed\jetified-play-services-basement-18.0.0\AndroidManifest.xml:22:13-58
+uses-library#androidx.window.extensions
+ADDED from [androidx.window:window:1.0.0-beta04] C:\Users\rmcg0\.gradle\caches\transforms-3\d6c3216daf4e886289fdcc05982420e7\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:25:9-27:40
+	android:required
+		ADDED from [androidx.window:window:1.0.0-beta04] C:\Users\rmcg0\.gradle\caches\transforms-3\d6c3216daf4e886289fdcc05982420e7\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:27:13-37
+	android:name
+		ADDED from [androidx.window:window:1.0.0-beta04] C:\Users\rmcg0\.gradle\caches\transforms-3\d6c3216daf4e886289fdcc05982420e7\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:26:13-54
+uses-library#androidx.window.sidecar
+ADDED from [androidx.window:window:1.0.0-beta04] C:\Users\rmcg0\.gradle\caches\transforms-3\d6c3216daf4e886289fdcc05982420e7\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:28:9-30:40
+	android:required
+		ADDED from [androidx.window:window:1.0.0-beta04] C:\Users\rmcg0\.gradle\caches\transforms-3\d6c3216daf4e886289fdcc05982420e7\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:30:13-37
+	android:name
+		ADDED from [androidx.window:window:1.0.0-beta04] C:\Users\rmcg0\.gradle\caches\transforms-3\d6c3216daf4e886289fdcc05982420e7\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:29:13-51

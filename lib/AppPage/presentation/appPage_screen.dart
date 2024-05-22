@@ -6,6 +6,7 @@ import 'package:adc_handson_session/register/application/auth.dart';
 
 import '../../../login/presentation/login_screen.dart';
 import '../../../login/presentation/main_page.dart';
+import 'homeUserPage_screen.dart';
 
 
 class AppPage extends StatefulWidget {
@@ -60,7 +61,7 @@ class _AppPage extends State<AppPage> {
             bottomNavigationBar: tapBar(),
             body: TabBarView(
               children: [
-                Container(child: Icon(Icons.directions_car)),//PAGINAS A FAZER
+                Container(child: HomePage()),//PAGINAS A FAZER
                 Container(child: Icon(Icons.directions_transit))//PAGINAS A FAZER
               ],
             ),
