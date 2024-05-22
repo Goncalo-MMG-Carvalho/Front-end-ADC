@@ -1,9 +1,9 @@
 #!/bin/sh
 # This is a generated file; do not edit or check into version control.
-export "FLUTTER_ROOT=C:\Users\rmcg0\dev\flutter_windows_3.19.2-stable\flutter"
-export "FLUTTER_APPLICATION_PATH=C:\Users\rmcg0\OneDrive\Documentos\GitHub\APDCFRONTEND\Front-end-ADC"
+export "FLUTTER_ROOT=/home/rick/development/flutter"
+export "FLUTTER_APPLICATION_PATH=/home/rick/Documents/School/3º Ano/PROJETO ADC - FRONTEND"
 export "COCOAPODS_PARALLEL_CODE_SIGN=true"
-export "FLUTTER_TARGET=lib\main.dart"
+export "FLUTTER_TARGET=lib/main.dart"
 export "FLUTTER_BUILD_DIR=build"
 export "FLUTTER_BUILD_NAME=1.0.0"
 export "FLUTTER_BUILD_NUMBER=1"
