@@ -8,43 +8,6 @@ import 'package:dio/dio.dart';
 
 class Authentication {
 
-
-  static bool isPasswordCompliant(String password, [int minLength = 8]) {
-    //Null-safety ensures that password is never null
-    if (password.isEmpty) {
-      return false;
-    }
-
-    bool hasUppercase = password.contains(RegExp(r'[A-Z]'));
-    bool hasDigits = password.contains(RegExp(r'[0-9]'));
-    bool hasLowercase = password.contains(RegExp(r'[a-z]'));
-    bool hasSpecialCharacters =
-        password.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'));
-    bool hasMinLength = password.length > minLength;
-
-    return hasDigits &
-        hasUppercase &
-        hasLowercase &
-        hasSpecialCharacters &
-        hasMinLength;
-  }
-
-  static bool isUsernameCompliant(String username,[int minLength = 4]){
-    if(username.isEmpty) {
-      return false;
-    }
-
-    bool hasUppercase = username.contains(RegExp(r'[A-Z]'));
-    bool hasDigits = username.contains(RegExp(r'[0-9]'));
-    bool hasLowercase = username.contains(RegExp(r'[a-z]'));
-    bool hasMinLength = username.length > minLength;
-
-    return hasDigits &
-    hasUppercase &
-    hasLowercase &
-    hasMinLength;
-  }
-
   static bool loginUser(String username, String password) {
     //  API Call to authenticate an user (GoogleAppEngine endpoint)
 

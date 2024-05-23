@@ -25,55 +25,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void logInButtonPressed(String username, String password) {
 
-    //TODO: Also check the username
-    bool pwCompliant = Authentication.isPasswordCompliant(password);
-    bool usCompliant = Authentication.isUsernameCompliant(username);
 
-    if (!pwCompliant) {
-      showDialog(
-        context: context,
-        builder: (context) {
-          return const AlertDialog(
-              backgroundColor: Color.fromRGBO(248, 237, 227, 1),
-              contentPadding: EdgeInsets.all(20),
-              content: Text("Invalid password format!",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Color.fromRGBO(121, 135, 119, 1),
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'Arial',
-                height: 1.5,
-              ),
-              ),
-          );
-        },
-      );
-    }
-    else if(!usCompliant){
-      showDialog(
-        context: context,
-        builder: (context) {
-          return const AlertDialog(
-            backgroundColor: Color.fromRGBO(248, 237, 227, 1),
-            contentPadding: EdgeInsets.all(20),
-            content: Text("Invalid username format!",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Color.fromRGBO(121, 135, 119, 1),
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'Arial',
-                height: 1.5,
-              ),
-            ),
-          );
-        },
-      );
-    }
     // TODO: Check if the User can be logged in.
     //  API Call to your GoogleAppEngine or Dummy API
-    else if (Authentication.loginUser(username, password)) {
+    if (Authentication.loginUser(username, password)) {
 
       // TODO: Update the DB with the last active time of the user
 
