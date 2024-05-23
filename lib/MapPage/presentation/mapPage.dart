@@ -68,8 +68,12 @@ class _MapPage extends State<MapPage> {
     try {
       List<Location> locations = await locationFromAddress(address);
       Location location = locations.first;
+      LatLng newLatLng = LatLng(location.latitude, location.longitude);
+      
+      mapController.animateCamera(CameraUpdate.newLatLng(newLatLng)); //set the camera center to given latlng
+
       setState(() {
-        _currentLocation = LatLng(location.latitude, location.longitude);
+        _currentLocation = newLatLng;
       });
     } catch (e) {
       print(e);
