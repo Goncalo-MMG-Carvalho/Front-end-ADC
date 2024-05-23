@@ -71,7 +71,7 @@ class _MapPage extends State<MapPage> {
       print("LATLNG: $newLatLng");
       
       mapController.animateCamera(CameraUpdate.newLatLng(newLatLng)); //set the camera center to given latlng
-
+      //print("New location = $newLatLng");
       setState(() {
         _currentLocation = newLatLng;
       });

@@ -1,9 +1,10 @@
 runtime: python38
+
 handlers:
   - url: /
-    static_files: web/index.html
-    upload: web/index.html
+    static_files: build/web/index.html
+    upload: build/web/index.html
 
   - url: /(.*)
-    static_files: web/\1
-    upload: web/(.*)
+    static_files: build/web/\1
+    upload: build/web/(.*)
