@@ -1,10 +1,7 @@
 import 'package:adc_handson_session/main.dart';
-import 'package:dob_input_field/dob_input_field.dart';
 import 'package:flutter/material.dart';
 import 'package:adc_handson_session/register/application/auth.dart';
 
-import '../../login/presentation/login_screen.dart';
-import '../../login/presentation/main_page.dart';
 
 
 
@@ -395,7 +392,7 @@ class _RegisterScreen extends State<RegisterScreen>{
                                  );
                                },
                                style: ButtonStyle(
-                                 foregroundColor: MaterialStateProperty.all<Color>(const Color.fromRGBO(121, 135, 119, 1)),
+                                 foregroundColor: WidgetStateProperty.all<Color>(const Color.fromRGBO(121, 135, 119, 1)),
                                ),
                                child: const Text('Already have an account? Log in'),
                              ),
@@ -433,7 +430,7 @@ class _RegisterScreen extends State<RegisterScreen>{
           ),
           ),
         ),
-        Padding(padding: EdgeInsets.fromLTRB(20, 0, 20, 5),
+        Padding(padding: const EdgeInsets.fromLTRB(20, 0, 20, 5),
         child: RadioListTile<TipoConta>(
           title: const Text('Personal'),
           value: TipoConta.personal,
@@ -446,7 +443,7 @@ class _RegisterScreen extends State<RegisterScreen>{
           },
         ),
         ),
-        Padding(padding: EdgeInsets.fromLTRB(20, 0, 20, 5),
+        Padding(padding: const EdgeInsets.fromLTRB(20, 0, 20, 5),
         child: RadioListTile<TipoConta>(
           title: const Text('Business'),
           value: TipoConta.business,

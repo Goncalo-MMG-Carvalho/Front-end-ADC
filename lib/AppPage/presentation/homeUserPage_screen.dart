@@ -1,14 +1,6 @@
-import 'dart:ui';
 
-import 'package:adc_handson_session/AppPage/presentation/appPage_screen.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:adc_handson_session/login/application/auth.dart';
-import 'package:adc_handson_session/login/presentation/main_page.dart';
-import 'package:flutter/painting.dart';
-import 'package:flutter/widgets.dart';
 
-import '../../register/presentation/regist_screen.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -37,10 +29,10 @@ class _HomePageState extends State<HomePage> {
           Container(
             height: 1.0, // Adjust height as needed
             width: 350.0, // Adjust width as needed
-            color:  Color.fromRGBO(162, 178, 159, 1), // Change color as desired
+            color:  const Color.fromRGBO(162, 178, 159, 1), // Change color as desired
           ),
           Container(
-            padding: EdgeInsets.only(top: 10),
+            padding: const EdgeInsets.only(top: 10),
             child: const Text(
               'New values',
               style: TextStyle(

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:adc_handson_session/login/application/auth.dart';
 
 
 class MainScreen extends StatefulWidget {

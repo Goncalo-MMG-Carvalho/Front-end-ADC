@@ -1,7 +1,5 @@
 import 'dart:convert';
-import 'package:adc_handson_session/register/presentation/regist_screen.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
 import 'package:crypto/crypto.dart';
 
 class Authentication {
@@ -109,7 +107,7 @@ class Authentication {
     //print(tipo);
 
     var tipoConta = tipo.split(".");
-    var json;
+    String json;
 
     if(tipoConta[1] == "personal") {
       json = jsonEncode(<String, String>{

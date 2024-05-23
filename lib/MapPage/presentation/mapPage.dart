@@ -1,8 +1,4 @@
-import 'package:adc_handson_session/AppPage/presentation/appPage_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:adc_handson_session/login/application/auth.dart';
-import 'package:adc_handson_session/login/presentation/main_page.dart';
-import '../../register/presentation/regist_screen.dart';
 
 import 'package:permission_handler/permission_handler.dart';
 import 'package:geocoding/geocoding.dart';
@@ -61,10 +57,12 @@ class _MapPage extends State<MapPage> {
     }
   }
 
+  /*
   void printLocationFromAddress() async {
     Location location = await getLocationFromAddress("1600 Amphitheatre Parkway, Mountain View, CA");
     print("Latitude: ${location.latitude}, Longitude: ${location.longitude}");
   }
+   */
 
   void _getLatLngFromAddress(String address) async {
     try {

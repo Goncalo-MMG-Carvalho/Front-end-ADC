@@ -1,7 +1,3 @@
+/build/
 /.idea/
 /.dart_tool/
-# Ignore the entire build directory
-/build
-
-# But *NOT* the web build directory
-!/build/web

@@ -29,24 +29,26 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   dio: ^5.4.0
-  dio_cookie_manager: ^2.0.0
+  dio_cookie_manager: ^3.1.1
   flutter:
     sdk: flutter
   dob_input_field: ^2.0.0
   crypto: ^3.0.1
   sqflite: # SQLite featyres
   path: # Features for file locations
-  geolocator: ^7.6.2
+  geolocator: ^12.0.0
   http:
-  cookie_jar: ^3.0.1
+  cookie_jar: ^4.0.8
   permission_handler:
+  build_runner:
+  build_web_compilers:
 
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.6
   google_maps_flutter: ^2.6.1
-  geocoding: ^2.0.0
+  geocoding: ^3.0.0
 
 dev_dependencies:
   flutter_test:
@@ -57,7 +59,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^3.0.0
+  flutter_lints: ^4.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

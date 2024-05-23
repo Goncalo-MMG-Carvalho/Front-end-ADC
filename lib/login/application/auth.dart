@@ -1,10 +1,6 @@
 import 'dart:convert';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import 'package:dio/dio.dart';
-import 'package:dio_cookie_manager/dio_cookie_manager.dart';
-import 'package:cookie_jar/cookie_jar.dart';
 
 
 
@@ -111,7 +107,7 @@ class Authentication {
         print(response.toString());
         return false;
       }
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       print(e);
       return false;
     }

@@ -1,7 +1,6 @@
 import 'package:adc_handson_session/AppPage/presentation/appPage_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:adc_handson_session/login/application/auth.dart';
-import 'package:adc_handson_session/login/presentation/main_page.dart';
 
 import '../../register/presentation/regist_screen.dart';
 
@@ -142,7 +141,7 @@ class _LoginScreenState extends State<LoginScreen> {
         TextButton(
           onPressed: () {},
           style: ButtonStyle(
-            foregroundColor: MaterialStateProperty.all<Color>(const Color.fromRGBO(121, 135, 119, 1)),
+            foregroundColor: WidgetStateProperty.all<Color>(const Color.fromRGBO(121, 135, 119, 1)),
           ),
           child: const Text('Forgot Password?'),
 
@@ -177,7 +176,7 @@ class _LoginScreenState extends State<LoginScreen> {
             );
           },
           style: ButtonStyle(
-            foregroundColor: MaterialStateProperty.all<Color>(const Color.fromRGBO(121, 135, 119, 1)),
+            foregroundColor: WidgetStateProperty.all<Color>(const Color.fromRGBO(121, 135, 119, 1)),
           ),
           child: const Text('New here? Regist'),
         ),

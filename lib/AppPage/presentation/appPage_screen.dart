@@ -1,11 +1,6 @@
 import 'package:adc_handson_session/MapPage/presentation/mapPage.dart';
-import 'package:adc_handson_session/main.dart';
-import 'package:dob_input_field/dob_input_field.dart';
 import 'package:flutter/material.dart';
-import 'package:adc_handson_session/register/application/auth.dart';
 
-import '../../../login/presentation/login_screen.dart';
-import '../../../login/presentation/main_page.dart';
 import 'homeUserPage_screen.dart';
 
 
@@ -61,8 +56,8 @@ class _AppPage extends State<AppPage> {
             bottomNavigationBar: tapBar(),
             body: TabBarView(
               children: [
-                Container(child: HomePage()),//PAGINAS A FAZER
-                Container(child: Icon(Icons.directions_transit))//PAGINAS A FAZER
+                Container(child: const HomePage()),//PAGINAS A FAZER
+                Container(child: const Icon(Icons.directions_transit))//PAGINAS A FAZER
               ],
             ),
             backgroundColor: const Color.fromRGBO(248, 237, 227, 1),

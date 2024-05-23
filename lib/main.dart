@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 import 'login/data/users_local_storage.dart';
 import 'login/presentation/login_screen.dart';
@@ -10,7 +8,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   // Uncomment later on to test the Local DB
   // Test it on Android! Doesn't work on the browser
