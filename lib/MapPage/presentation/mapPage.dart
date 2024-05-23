@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 
 import 'package:permission_handler/permission_handler.dart';
@@ -48,14 +50,7 @@ class _MapPage extends State<MapPage> {
     });
   }
 
-  Future<Location> getLocationFromAddress(String address) async {
-    try {
-      List<Location> locations = await locationFromAddress(address);
-      return locations.first;
-    } catch (e) {
-      throw Exception('Failed to get location');
-    }
-  }
+
 
   /*
   void printLocationFromAddress() async {
@@ -66,9 +61,14 @@ class _MapPage extends State<MapPage> {
 
   void _getLatLngFromAddress(String address) async {
     try {
+      print("ADRESS: $address");
       List<Location> locations = await locationFromAddress(address);
+      print("TEST PASSOU");
+      print("LOCATIONS: " + locations.toString());
       Location location = locations.first;
       LatLng newLatLng = LatLng(location.latitude, location.longitude);
+
+      print("LATLNG: $newLatLng");
       
       mapController.animateCamera(CameraUpdate.newLatLng(newLatLng)); //set the camera center to given latlng
 
@@ -85,8 +85,6 @@ class _MapPage extends State<MapPage> {
     _controller.dispose();
     super.dispose();
   }
-
-
 
 
   @override
