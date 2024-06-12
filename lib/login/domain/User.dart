@@ -1,20 +1,18 @@
 
 class User {
-  final String username, email;
-  final DateTime lastLogin;
+  final String username, token;
 
   const User(
       {required this.username,
-        required this.email,
-        required this.lastLogin});
+        required this.token
+      });
 
   // Convert a User into a Map. The keys must correspond to the names of the
   // columns in the database.
   Map<String, dynamic> toMap() {
     return {
       'username': username,
-      'email': email,
-      'lastLogin': lastLogin.millisecondsSinceEpoch,
+      'token': token,
     };
   }
 
@@ -22,7 +20,7 @@ class User {
   // each user when using the print statement.
   @override
   String toString() {
-    return 'User{username: $username, email: $email, lastLogin: $lastLogin}';
+    return 'User{username: $username, token: $token}';
   }
 
 }

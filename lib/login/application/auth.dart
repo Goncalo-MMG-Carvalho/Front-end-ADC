@@ -1,14 +1,32 @@
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:path/path.dart';
+
+import '../data/users_local_storage.dart';
+import '../domain/User.dart';
+import 'package:http/http.dart' as http;
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:localstorage/localstorage.dart';
 
 
 
+
+const String localDatabaseName = "app.db";
 
 
 class Authentication {
 
-  static bool loginUser(String username, String password) {
+  Future<void> insertToken(String username, String token) async {
+    LocalDB db = LocalDB(localDatabaseName);
+    await db.initDB();
+    print("INICIOU");
+    User u = User(username: username, token: token);
+    db.addUser(u);
+  }
+
+   bool loginUser(String username, String password) {
     //  API Call to authenticate an user (GoogleAppEngine endpoint)
 
     // Note: hash passwords before sending them through the communication channel
@@ -25,8 +43,8 @@ class Authentication {
     return true;
   }
 
-
-  static Future<bool> fetchAuthenticate(String username, String password) async {
+/*
+   Future<bool> fetchAuthenticate(String username, String password) async {
     var bytesP = utf8.encode(password);
     var encodedP = sha512.convert(bytesP);
     print(encodedP);
@@ -49,6 +67,13 @@ class Authentication {
       );
 
       if (response.statusCode == 200) {
+        print(response.data);
+
+        final tokenString = response.data.split("|");
+
+        insertToken(username,"TOKEN DO USER");
+
+
 
         Map<String, List<String>> headersMap = response.headers.map;
         print(headersMap);
@@ -75,7 +100,7 @@ class Authentication {
       return false;
     }
   }
-
+*/
 /*
   static Future<bool> fetchAuthenticate(String username, String password) async {
     var bytesP = utf8.encode(password);
@@ -130,8 +155,8 @@ class Authentication {
   }
 */
 
-/*
-  static Future<bool> fetchAuthenticate(String username, String password) async {
+
+   Future<bool> fetchAuthenticate(String username, String password) async {
     var bytesP = utf8.encode(password);
     var encodedP = sha512.convert(bytesP);
 
@@ -148,25 +173,33 @@ class Authentication {
     );
 
     if (response.statusCode == 200) {
-      // If the server did return a 200 OK response,
-      // then parse the JSON.
+
+      final tokenFull = response.body.split("|");
+      String token = tokenFull[1];
+
+      if(kIsWeb){
+
+        await initLocalStorage();
+        WidgetsFlutterBinding.ensureInitialized();
+        localStorage.setItem('token', token);
+
+      }else {
+
+        insertToken(username, token);
+      }
+
       print(jsonDecode(response.body));
-      String? a = response.headers['Set-Cookie'];
-      print(a);
-      var b = response.headers['set-cookie'];
-      print(b.toString());
-      String? c = response.headers['cookie'];
-      print(c);
-      print(response.headers.values);
+
         // Extract cookie from response headers
       return true;
     } else {
       return false;
     }
-  }*/
+  }
 }
 
 void main() async {
+
   // Users lists: https://dummyjson.com/users
   //Authentication.fetchAuthenticate("hbingley1", "CQutx25i8r");
 }

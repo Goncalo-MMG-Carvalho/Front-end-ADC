@@ -42,6 +42,7 @@ dependencies:
   permission_handler:
   build_runner:
   build_web_compilers:
+  localstorage: ^5.0.0
 
 
   # The following adds the Cupertino Icons font to your application.

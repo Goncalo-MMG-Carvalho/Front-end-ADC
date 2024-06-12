@@ -14,7 +14,7 @@ class LocalDB {
 
   Future<Database> initDB() async {
     WidgetsFlutterBinding.ensureInitialized();
-
+    print("ENTRAMOS NO INIT");
     String path = await getDatabasesPath();
 
     db = await openDatabase(
@@ -29,7 +29,7 @@ class LocalDB {
   Future<void> _onCreate(Database db, int version) async {
     print('onCreate');
     await db.transaction((txn) async {
-      await txn.execute('CREATE TABLE users (username TEXT PRIMARY KEY, email TEXT, lastLogin INTEGER)');
+      await txn.execute('CREATE TABLE users (username TEXT PRIMARY KEY, token TEXT)');
     });
   }
 
@@ -44,6 +44,8 @@ class LocalDB {
       u.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
+    print(u.toString());
+
   }
 
   Future<int> countUsers() async {

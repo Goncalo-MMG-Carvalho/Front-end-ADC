@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:adc_handson_session/login/application/auth.dart';
 
 import '../../register/presentation/regist_screen.dart';
+import '../data/users_local_storage.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -23,12 +24,18 @@ class _LoginScreenState extends State<LoginScreen> {
     super.initState();
   }
 
+
+
+
   void logInButtonPressed(String username, String password) {
 
-
+    //Organizar melhor depois (usado por causa de nao poder ser chamado estaticamente)
+    Authentication auth = Authentication();
     // TODO: Check if the User can be logged in.
     //  API Call to your GoogleAppEngine or Dummy API
-    if (Authentication.loginUser(username, password)) {
+    if (auth.loginUser(username, password)) {
+
+
 
       // TODO: Update the DB with the last active time of the user
 
