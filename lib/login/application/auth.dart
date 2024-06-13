@@ -19,11 +19,21 @@ const String localDatabaseName = "app.db";
 class Authentication {
 
   Future<void> insertToken(String username, String token) async {
-    LocalDB db = LocalDB(localDatabaseName);
-    await db.initDB();
-    print("INICIOU");
-    User u = User(username: username, token: token);
-    db.addUser(u);
+
+    if(kIsWeb){
+      await initLocalStorage();
+      WidgetsFlutterBinding.ensureInitialized();
+      localStorage.setItem('token', token);
+
+    }else {
+      LocalDB db = LocalDB(localDatabaseName);
+      await db.initDB();
+
+      print("INICIOU");
+
+      User u = User(username: username, token: token);
+      db.addUser(u);
+    }
   }
 
    bool loginUser(String username, String password) {
@@ -177,8 +187,10 @@ class Authentication {
       final tokenFull = response.body.split("|");
       String token = tokenFull[1];
 
-      if(kIsWeb){
+      insertToken(username, token);
 
+      /*
+      if(kIsWeb){
         await initLocalStorage();
         WidgetsFlutterBinding.ensureInitialized();
         localStorage.setItem('token', token);
@@ -186,8 +198,7 @@ class Authentication {
       }else {
 
         insertToken(username, token);
-      }
-
+      }*/
       print(jsonDecode(response.body));
 
         // Extract cookie from response headers

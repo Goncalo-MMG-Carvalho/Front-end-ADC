@@ -48,6 +48,16 @@ class LocalDB {
 
   }
 
+  Future<List<Map<String, Object?>>> getUsername() async {
+    final db = await initDB();
+    List<Map<String, Object?>> username = await db.rawQuery('SELECT username FROM users');
+    print(username);
+    return username;
+  }
+
+
+
+
   Future<int> countUsers() async {
     final db = await initDB();
     List<Map> list = await db.rawQuery('SELECT * FROM users');
