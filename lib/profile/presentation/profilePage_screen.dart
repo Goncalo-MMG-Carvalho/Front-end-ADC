@@ -1,9 +1,12 @@
+import 'dart:ui';
+
 import 'package:adc_handson_session/MapPage/presentation/mapPage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:adc_handson_session/login/data/users_local_storage.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:flutter/widgets.dart';
 import 'package:localstorage/localstorage.dart';
 
 
@@ -15,10 +18,12 @@ class ProfilePage extends StatefulWidget {
 }
 
 const String localDatabaseName = "app.db";
-String username = "";
+
+
 
 class _ProfilePage extends State<ProfilePage> {
 
+  String username = "";
 
 
   @override
@@ -32,15 +37,23 @@ class _ProfilePage extends State<ProfilePage> {
       final token = localStorage.getItem("token");
       print("TOKEN: $token");
       final parts = token?.split(".");
-      username = parts![0].split("u003d")[1].toString();
+      final fetchedUsername = parts![0].split("u003d")[1].toString();
       print(username);
+
+      setState(() {
+        username = fetchedUsername;
+      });
 
     }else {
 
       LocalDB db = LocalDB(localDatabaseName);
       print("TAMOS NO PROFILE PAGE STATE INIT");
-      db.getUsername();
+      final fetchedUsername = await db.getUsername();
+      print("NO PROFILE SCREEN JA COM O USERNAME $username");
 
+      setState(() {
+        username = fetchedUsername;
+      });
     }
   }
 
@@ -55,12 +68,12 @@ class _ProfilePage extends State<ProfilePage> {
                   title: Center(
                       child: Container(
                         margin: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
-                      child: const Text(
-                          "Profile",
-                        style: TextStyle(
-                          fontFamily: "Arial",
-                          fontSize: 36,
-                          color: Color.fromRGBO(248, 237, 227, 1),
+                        child: const Text(
+                            "Profile",
+                          style: TextStyle(
+                            fontFamily: "Arial",
+                            fontSize: 36,
+                            color: Color.fromRGBO(248, 237, 227, 1),
                         ),
                       ),
                     ),
@@ -87,30 +100,153 @@ class _ProfilePage extends State<ProfilePage> {
                 ),
                 body:  Column(
                   children: [
+
                     Center(
-                    child: Container(
-                      margin: EdgeInsets.all(20),
-                      padding: const EdgeInsets.fromLTRB(20, 10, 20, 70),
-                      alignment: Alignment.center,
-                      width: 350.0,
-                      height: 300.0,
-                      decoration:  BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: const Color.fromRGBO(248, 237, 227, 1),
-                          boxShadow: [
-                            BoxShadow(
-                              color: const Color.fromRGBO(121, 135, 119, 1).withOpacity(0.5), // Shadow color
-                              spreadRadius: 5, // Spread radius
-                              blurRadius: 7, // Blur radius
-                              offset: const Offset(0, 3), // Offset
-                            ),
-                          ]
+                      child: Container(
+                        margin: EdgeInsets.all(20),
+                        padding: const EdgeInsets.fromLTRB(20, 10, 20, 70),
+                        alignment: Alignment.center,
+                        width: 350.0,
+                        height: 300.0,
+                        decoration:  BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: const Color.fromRGBO(248, 237, 227, 1),
+                            boxShadow: [
+                              BoxShadow(
+                                color: const Color.fromRGBO(121, 135, 119, 1).withOpacity(0.5), // Shadow color
+                                spreadRadius: 5, // Spread radius
+                                blurRadius: 7, // Blur radius
+                                offset: const Offset(0, 3), // Offset
+                              ),
+                            ]
+                        ),
+                        //CAIXA COM AS INFORMAÇÕES DO UTILIZADOR
+                        child: profileInfo(),
                       ),
-                      child: profileInfo(),
                     ),
+                    Expanded(
+                      child:Container(
+                        margin: EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 0.0),
+                        width: double.infinity,
+                        color: const Color.fromRGBO(248, 237, 227, 1),
+                        child:  Column(
+                           children: [
+                             Container(
+                               alignment: Alignment.topLeft,
+                                margin: const EdgeInsets.fromLTRB(10.0, 10.0, 0.0, 10.0),
+                                child: const Text(
+                                  "Account settings",
+                                  style: TextStyle(
+                                  fontFamily: "Arial",
+                                  fontSize: 20,
+                                  color: Color.fromRGBO(121, 135, 119, 1),
+                                  ),
+                                )
+                             ),
+
+                              Expanded(
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      decoration: const BoxDecoration(
+                                      color: Color.fromRGBO(248, 237, 227, 1),
+                                      border: Border(
+                                        top: BorderSide(color: Color.fromRGBO(197, 189, 181, 1.0), width: 0.5),
+                                        bottom: BorderSide(color: Color.fromRGBO(197, 189, 181, 1.0), width: 0.5),
+                                      ),
+                                      ),
+                                      child: TextButton(
+                                        style: TextButton.styleFrom(
+                                          backgroundColor: const Color.fromRGBO(248, 237, 227, 1),
+
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(0),
+                                          ),
+                                          padding: const EdgeInsets.all(20),
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          children: [
+                                            const Icon(
+                                              Icons.lock_outline,
+                                              color: Color.fromRGBO(121, 135, 119, 1),
+                                            ),
+                                            Container(
+                                              margin: const EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0),
+                                              child: const Text(
+                                                "Change password",
+                                                style: TextStyle(
+                                                  color: Color.fromRGBO(121, 135, 119, 1),
+                                                  fontFamily: "Arial",
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                        onPressed: () {
+                                          // TODO METER CHANGE PASSWORD
+                                        },
+                                      ),
+                                    ),
 
 
-                    ),
+
+
+
+                                    //LOGOUT TEM DE SER O ULTIMO DA SEQUENCIA
+                                    Container(
+                                      decoration: const BoxDecoration(
+                                        color: Color.fromRGBO(248, 237, 227, 1),
+                                        border: Border(
+                                          top: BorderSide(color: Color.fromRGBO(197, 189, 181, 1.0), width: 0.5),
+                                          bottom: BorderSide(color: Color.fromRGBO(197, 189, 181, 1.0), width: 0.5),
+                                        ),
+                                      ),
+                                      child: TextButton(
+                                        style: TextButton.styleFrom(
+                                          backgroundColor: const Color.fromRGBO(248, 237, 227, 1),
+
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(0),
+                                          ),
+                                          padding: const EdgeInsets.all(20),
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          children: [
+                                            const Icon(
+                                              Icons.logout,
+                                              color: Color.fromRGBO(121, 135, 119, 1),
+                                            ),
+                                            Container(
+                                              margin: const EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0),
+                                              child: const Text(
+                                                "Logout",
+                                                style: TextStyle(
+                                                  color: Color.fromRGBO(121, 135, 119, 1),
+                                                  fontFamily: "Arial",
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                        onPressed: () {
+                                          // TODO METER CHANGE PASSWORD
+                                        },
+                                      ),
+                                    )
+                                  ]
+                                ),
+                              )
+
+                          ]
+                        )
+                      )
+                    )
                   ],
                 ),
                 backgroundColor: const Color.fromRGBO(189, 210, 182, 1),
@@ -121,13 +257,7 @@ class _ProfilePage extends State<ProfilePage> {
   Widget profileInfo() {
     return Column(
       children: [
-
-          /*child: Text(
-            "Username: \n$username",
-            style: TextStyle(
-              fontFamily: "Arial",
-
-            ),*/
+        //PODEM SER USADOS VARIOS DESTES PARA CRIAR A PARTE DAS INFORMAÇÕES DO UTILIZADOR
         Container(
           alignment: Alignment.topLeft,
           margin: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
