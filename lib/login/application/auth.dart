@@ -20,13 +20,15 @@ class Authentication {
 
   Future<void> insertToken(String username, String token) async {
 
-    if(kIsWeb){
+    if (kIsWeb) {
       await initLocalStorage();
       WidgetsFlutterBinding.ensureInitialized();
       localStorage.setItem('token', token);
-
-    }else {
+    } else {
       LocalDB db = LocalDB(localDatabaseName);
+      //FAZ MAIS SENTIDO REMOVER A TABLE DOS USERS QUANDO É FEITO OUTRO LOGIN OU QUANDO E INICIADA A APP NO MAIS DART?
+      //await db.restartDB();
+      await db.deleteDB();
       await db.initDB();
 
       print("INICIOU");
@@ -36,7 +38,7 @@ class Authentication {
     }
   }
 
-   bool loginUser(String username, String password) {
+  bool loginUser(String username, String password) {
     //  API Call to authenticate an user (GoogleAppEngine endpoint)
 
     // Note: hash passwords before sending them through the communication channel
@@ -52,6 +54,37 @@ class Authentication {
 
     return true;
   }
+
+  Future<bool> fetchAuthenticate(String username, String password) async {
+    var bytesP = utf8.encode(password);
+    var encodedP = sha512.convert(bytesP);
+
+    final response = await http.post(
+      Uri.parse('https://projeto-adc-423314.ew.r.appspot.com/rest/login/v1'),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(<String, String>{
+        'username': username,
+        'password': encodedP.toString(),
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      final tokenFull = response.body.split("|");
+      String token = tokenFull[1];
+
+      insertToken(username, token);
+
+      print(jsonDecode(response.body));
+
+      // Extract cookie from response headers
+      return true;
+    } else {
+      return false;
+    }
+  }
+
 
 /*
    Future<bool> fetchAuthenticate(String username, String password) async {
@@ -166,47 +199,6 @@ class Authentication {
 */
 
 
-   Future<bool> fetchAuthenticate(String username, String password) async {
-    var bytesP = utf8.encode(password);
-    var encodedP = sha512.convert(bytesP);
-
-    final response = await http.post(
-      Uri.parse('https://projeto-adc-423314.ew.r.appspot.com/rest/login/v1'),
-      //Uri.parse('http://localhost:8080/rest/login/v1'),
-      headers: <String, String>{
-        'Content-Type': 'application/json',
-      },
-      body: jsonEncode(<String, String>{
-        'username': username,
-        'password': encodedP.toString(),
-      }),
-    );
-
-    if (response.statusCode == 200) {
-
-      final tokenFull = response.body.split("|");
-      String token = tokenFull[1];
-
-      insertToken(username, token);
-
-      /*
-      if(kIsWeb){
-        await initLocalStorage();
-        WidgetsFlutterBinding.ensureInitialized();
-        localStorage.setItem('token', token);
-
-      }else {
-
-        insertToken(username, token);
-      }*/
-      print(jsonDecode(response.body));
-
-        // Extract cookie from response headers
-      return true;
-    } else {
-      return false;
-    }
-  }
 }
 
 void main() async {

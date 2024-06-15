@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:adc_handson_session/MapPage/presentation/mapPage.dart';
+import 'package:adc_handson_session/profile/application/auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,8 @@ import 'package:adc_handson_session/login/data/users_local_storage.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/widgets.dart';
 import 'package:localstorage/localstorage.dart';
+
+
 
 
 class ProfilePage extends StatefulWidget {
@@ -25,36 +28,25 @@ class _ProfilePage extends State<ProfilePage> {
 
   String username = "";
 
+  final Authentication auth = Authentication();
+
+  bool isLoading = true;
+
+  //tem que ter o null, porque para correr precisa de estar inicializado
+  userInfo? user;
 
   @override
   void initState() {
     super.initState();
-    getUsername();
+    getUserInfo();
   }
 
-  Future<void> getUsername() async {
-    if(kIsWeb){
-      final token = localStorage.getItem("token");
-      print("TOKEN: $token");
-      final parts = token?.split(".");
-      final fetchedUsername = parts![0].split("u003d")[1].toString();
-      print(username);
-
-      setState(() {
-        username = fetchedUsername;
-      });
-
-    }else {
-
-      LocalDB db = LocalDB(localDatabaseName);
-      print("TAMOS NO PROFILE PAGE STATE INIT");
-      final fetchedUsername = await db.getUsername();
-      print("NO PROFILE SCREEN JA COM O USERNAME $username");
-
-      setState(() {
-        username = fetchedUsername;
-      });
-    }
+  void getUserInfo() async {
+    userInfo? user1 = await auth.getUser();
+    setState(() {
+       user = user1;
+       isLoading = false;
+    });
   }
 
   @override
@@ -98,13 +90,15 @@ class _ProfilePage extends State<ProfilePage> {
                     )
                   ],
                 ),
-                body:  Column(
+                body: isLoading
+                    ? Center(child: CircularProgressIndicator())
+                    : Column(
                   children: [
 
                     Center(
                       child: Container(
                         margin: EdgeInsets.all(20),
-                        padding: const EdgeInsets.fromLTRB(20, 10, 20, 70),
+                        padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
                         alignment: Alignment.center,
                         width: 350.0,
                         height: 300.0,
@@ -254,40 +248,176 @@ class _ProfilePage extends State<ProfilePage> {
     );
   }
 
+
   Widget profileInfo() {
-    return Column(
-      children: [
-        //PODEM SER USADOS VARIOS DESTES PARA CRIAR A PARTE DAS INFORMAÇÕES DO UTILIZADOR
-        Container(
-          alignment: Alignment.topLeft,
-          margin: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
-          child: Text.rich(
-            TextSpan(
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Container(
+            alignment: Alignment.topLeft,
+            //margin: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
+            child: Row(
+              //crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const TextSpan(
-                  text: 'Username:\n',
-                  style: TextStyle(
-                    fontFamily: 'Arial',
-                    fontSize: 15, // Size for "Username:"
-                    fontWeight: FontWeight.bold,
-                    color: Color.fromRGBO(121, 135, 119, 1),// Optional, to make "Username:" bold
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    padding: const EdgeInsets.only(left: 20.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text.rich(
+                          TextSpan(
+                            children: [
+                              const TextSpan(
+                                text: 'Username:\n',
+                                style: TextStyle(
+                                  fontFamily: 'Arial',
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color.fromRGBO(121, 135, 119, 1),
+                                ),
+                              ),
+                              TextSpan(
+                                text: user!.username,
+                                style: const TextStyle(
+                                  fontFamily: 'Arial',
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.normal,
+                                  color: Color.fromRGBO(121, 135, 119, 1),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                            margin: const EdgeInsets.only(top: 20.0, bottom: 20.0)
+                        ),
+                        Text.rich(
+                          TextSpan(
+                            children: [
+                              const TextSpan(
+                                text: 'Email:\n',
+                                style: TextStyle(
+                                  fontFamily: 'Arial',
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color.fromRGBO(121, 135, 119, 1),
+                                ),
+                              ),
+                              TextSpan(
+                                text: user!.email,
+                                style: const TextStyle(
+                                  fontFamily: 'Arial',
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.normal,
+                                  color: Color.fromRGBO(121, 135, 119, 1),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                            margin: const EdgeInsets.only(top: 20.0, bottom: 20.0)
+                        ),
+                        Text.rich(
+                          TextSpan(
+                            children: [
+                              const TextSpan(
+                                text: 'Account type:\n',
+                                style: TextStyle(
+                                  fontFamily: 'Arial',
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color.fromRGBO(121, 135, 119, 1),
+                                ),
+                              ),
+                              TextSpan(
+                                text: user!.role,
+                                style: const TextStyle(
+                                  fontFamily: 'Arial',
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.normal,
+                                  color: Color.fromRGBO(121, 135, 119, 1),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-                TextSpan(
-                  text: username,
-                  style: const TextStyle(
-                    fontFamily: 'Arial',
-                    fontSize: 20, // Size for the username variable
-                    fontWeight: FontWeight.normal,
-                    color: Color.fromRGBO(121, 135, 119, 1),
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    padding: const EdgeInsets.only(left: 50.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                            margin: const EdgeInsets.only(top: 85.0)
+                        ),
+                        Text.rich(
+                          TextSpan(
+                            children: [
+                              const TextSpan(
+                                text: 'Name:\n',
+                                style: TextStyle(
+                                  fontFamily: 'Arial',
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color.fromRGBO(121, 135, 119, 1),
+                                ),
+                              ),
+                              TextSpan(
+                                text: user!.name,
+                                style: const TextStyle(
+                                  fontFamily: 'Arial',
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.normal,
+                                  color: Color.fromRGBO(121, 135, 119, 1),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                            margin: const EdgeInsets.only(top: 20.0, bottom: 20.0)
+                        ),
+                        Text.rich(
+                          TextSpan(
+                            children: [
+                              const TextSpan(
+                                text: 'Age:\n',
+                                style: TextStyle(
+                                  fontFamily: 'Arial',
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color.fromRGBO(121, 135, 119, 1),
+                                ),
+                              ),
+                              TextSpan(
+                                text: user!.age,
+                                style: const TextStyle(
+                                  fontFamily: 'Arial',
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.normal,
+                                  color: Color.fromRGBO(121, 135, 119, 1),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],
             ),
           ),
-        )
-
-      ],
+        ],
+      ),
     );
   }
 

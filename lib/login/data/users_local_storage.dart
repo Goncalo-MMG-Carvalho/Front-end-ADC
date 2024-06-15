@@ -56,6 +56,14 @@ class LocalDB {
     return username;
   }
 
+  Future<String> getToken() async {
+    final db = await initDB();
+    List<Map<String, Object?>> usernameQuery = await db.rawQuery('SELECT token FROM users');
+    final token = usernameQuery.first.values.first.toString();
+    print(token);
+    return token;
+  }
+
 
   Future<int> countUsers() async {
     final db = await initDB();
@@ -70,4 +78,15 @@ class LocalDB {
     final tables = await db.rawQuery('SELECT * FROM sqlite_master ORDER BY name;');
     print(tables);
   }
+
+  Future<void> deleteDB() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    String path = await getDatabasesPath();
+    await deleteDatabase(join(path, databaseName));
+  }
+
+ // Future<void> restartDB() async {
+ //   final db = await initDB();
+ //   await db.execute('DROP TABLE IF EXISTS users');
+ // }
 }
