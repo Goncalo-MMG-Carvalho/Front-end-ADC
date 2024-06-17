@@ -1,12 +1,10 @@
 import 'dart:async';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
-
 import 'package:google_maps_flutter_android/google_maps_flutter_android.dart';
 import 'package:google_maps_flutter_platform_interface/google_maps_flutter_platform_interface.dart';
 
@@ -55,27 +53,31 @@ class _MapPage extends State<MapPage> {
       });
     } catch (e) {
       print("Error getting current location: $e");
-      // Default location if there's an errortt
+      // Default location if there's an error
       setState(() {
-        _currentLocation =
-        const LatLng(38.7223, 9.1393); // Default to Lisbon
+        _currentLocation = const LatLng(38.7223, -9.1393); // Default to Lisbon
         gotLocation = true;
       });
     }
   }
 
+  //Function is not usable on web, will return null value
   Future<void> _getLatLngFromAddress(String address) async {
     try {
       List<Location> locations;
+      if (kIsWeb) {
+        locations = [];
+      } else {
         locations = await locationFromAddress(address);
-
+      }
       if (locations.isEmpty) {
         print("No locations found for the address: $address");
         return Future.value();
       }
       Location location = locations.first;
       LatLng newLatLng = LatLng(location.latitude, location.longitude);
-      mapController.animateCamera(CameraUpdate.newLatLng(newLatLng)); // Set the camera center to given LatLng
+      CameraPosition newPos = CameraPosition(target: newLatLng, zoom: 13.0);
+      mapController.animateCamera(CameraUpdate.newCameraPosition(newPos)); // Set the camera center to given LatLng
       setState(() {
         _currentLocation = newLatLng;
       });
@@ -85,7 +87,6 @@ class _MapPage extends State<MapPage> {
       return Future.error(e);
     }
   }
-
 
   Future<void> _initializeAndroidMapRenderer() async {
     final GoogleMapsFlutterPlatform platform = GoogleMapsFlutterPlatform.instance;
@@ -139,25 +140,26 @@ class _MapPage extends State<MapPage> {
             child: gotLocation
                 ? Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextField(
-                    controller: _controller,
-                    decoration: const InputDecoration(
-                      labelText: 'Enter location',
-                      border: OutlineInputBorder(),
+                if (!kIsWeb)
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextField(
+                      controller: _controller,
+                      decoration: const InputDecoration(
+                        labelText: 'Procurar',
+                        border: OutlineInputBorder(),
+                        prefixIcon: Icon(Icons.search),
+                      ),
+                      onSubmitted: (value) {
+                        _getLatLngFromAddress(value);
+                      },
                     ),
-                    onSubmitted: (value) {
-                      _getLatLngFromAddress(value);
-                    },
                   ),
-                ),
                 Expanded(
                   child: GoogleMap(
                     onMapCreated: _onMapCreated,
                     initialCameraPosition: CameraPosition(
-                      target: _currentLocation ??
-                          const LatLng(0, 0),
+                      target: _currentLocation ?? const LatLng(0, 0),
                       zoom: 13.0,
                     ),
                   ),

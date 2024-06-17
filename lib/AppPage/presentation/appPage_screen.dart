@@ -120,7 +120,7 @@ class _AppPage extends State<AppPage> {
             ListTile(
               title: const Text('Map'),
               onTap: () {
-                Navigator.push( //responsavel por passar para a outra pagina (mainScreen), pilha que empilha as paginas acessadas, podendo assim voltar a tras nas paginas
+                Navigator.push( //responsavel por passar para a outra pagina (mainScreen), pilha que empilha as paginas acessadas, podendo assim voltar atras nas paginas
                   context,
                   MaterialPageRoute(builder: (context) => const MapPage()),
                 );
