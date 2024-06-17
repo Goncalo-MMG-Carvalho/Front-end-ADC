@@ -7,6 +7,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:adc_handson_session/login/data/users_local_storage.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:flutter/painting.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:localstorage/localstorage.dart';
 
@@ -56,9 +58,6 @@ class _ProfilePage extends State<ProfilePage> {
     // TODO: Check if the User can be logged in.
     //  API Call to your GoogleAppEngine or Dummy API
     if (auth.changePassword(username, oldPassword, newPassword)) {
-
-
-
       /*Navigator.push( //responsavel por passar para a outra pagina (mainScreen), pilha que empilha as paginas acessadas, podendo assim voltar a tras nas paginas
         context,
         MaterialPageRoute(builder: (context) => const AppPage()),
@@ -148,10 +147,10 @@ class _ProfilePage extends State<ProfilePage> {
                         child: profileInfo(),
                       ),
                     ),
-                    const Spacer(),
+                //    const Spacer(),
                     Expanded(
                       child:Container(
-                        margin: EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 0.0),
+                        margin: const EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 0.0),
                         width: double.infinity,
                         color: const Color.fromRGBO(248, 237, 227, 1),
                         child:  Column(
@@ -211,113 +210,9 @@ class _ProfilePage extends State<ProfilePage> {
                                             )
                                           ],
                                         ),
-                                        onPressed: () {
+                                        onPressed: () async {
                                           // TODO METER CHANGE PASSWORD
-                                          showDialog(
-                                            context: context,
-                                            builder: (BuildContext context) {
-                                              final TextEditingController previousPasswordController = TextEditingController();
-                                              final TextEditingController newPasswordController = TextEditingController();
-                                              final TextEditingController confirmNewPasswordController = TextEditingController();
-
-                                              return AlertDialog(
-                                                backgroundColor: const Color.fromRGBO(248, 237, 227, 1),
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius: BorderRadius.circular(20),
-                                                ),
-                                                title: Center(
-                                                  child: Text(
-                                                    'Change Password',
-                                                    style: TextStyle(
-                                                      fontFamily: 'Arial',
-                                                      fontSize: 24,
-                                                      fontWeight: FontWeight.bold,
-                                                      color: Color.fromRGBO(121, 135, 119, 1),
-                                                    ),
-                                                  ),
-                                                ),
-                                                content: Form(
-                                                  child: Column(
-                                                    mainAxisSize: MainAxisSize.min,
-                                                    children: <Widget>[
-                                                      TextFormField(
-                                                        controller: previousPasswordController,
-                                                        decoration: const InputDecoration(
-                                                          labelText: 'Previous Password',
-                                                          labelStyle: TextStyle(color: Color.fromRGBO(121, 135, 119, 1)),
-                                                          enabledBorder: UnderlineInputBorder(
-                                                            borderSide: BorderSide(color: Color.fromRGBO(121, 135, 119, 1)),
-                                                          ),
-                                                        ),
-                                                        obscureText: true,
-                                                        validator: (value) {
-                                                          if (value == null || value.isEmpty) {
-                                                            return 'Please enter your previous password';
-                                                          }
-                                                          return null;
-                                                        },
-                                                      ),
-                                                      TextFormField(
-                                                        controller: newPasswordController,
-                                                        decoration: const InputDecoration(
-                                                          labelText: 'New Password',
-                                                          labelStyle: TextStyle(color: Color.fromRGBO(121, 135, 119, 1)),
-                                                          enabledBorder: UnderlineInputBorder(
-                                                            borderSide: BorderSide(color: Color.fromRGBO(121, 135, 119, 1)),
-                                                          ),
-                                                        ),
-                                                        obscureText: true,
-                                                        validator: (value) {
-                                                          if (value == null || value.isEmpty) {
-                                                            return 'Please enter a new password';
-                                                          }
-                                                          return null;
-                                                        },
-                                                      ),
-                                                      TextFormField(
-                                                        controller: confirmNewPasswordController,
-                                                        decoration: const InputDecoration(
-                                                          labelText: 'Confirm New Password',
-                                                          labelStyle: TextStyle(color: Color.fromRGBO(121, 135, 119, 1)),
-                                                          enabledBorder: UnderlineInputBorder(
-                                                            borderSide: BorderSide(color: Color.fromRGBO(121, 135, 119, 1)),
-                                                          ),
-                                                        ),
-                                                        obscureText: true,
-                                                        validator: (value) {
-                                                          if (value == null || value.isEmpty) {
-                                                            return 'Please confirm your new password';
-                                                          } else if (value != newPasswordController.text) {
-                                                            return 'Passwords do not match';
-                                                          }
-                                                          return null;
-                                                        },
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                                actions: <Widget>[
-                                                  TextButton(
-                                                    child: const Text('Cancel'),
-                                                    onPressed: () {
-                                                      Navigator.of(context).pop();
-                                                    },
-                                                    style: TextButton.styleFrom(
-                                                      iconColor: Color.fromRGBO(121, 135, 119, 1),
-                                                    ),
-                                                  ),
-                                                  TextButton(
-                                                    child: const Text('Confirm'),
-                                                    onPressed: () => changePasswordButtonPressed(
-                                                      user!.username, previousPasswordController.text, newPasswordController.text),
-                                                    style: TextButton.styleFrom(
-                                                      backgroundColor: Colors.blue, // Adjust colors as needed
-                                                    ),
-                                                  ),
-                                                ],
-                                              );
-                                            },
-                                          );
+                                          await changePassword();
 
                                         },
                                       ),
@@ -380,7 +275,6 @@ class _ProfilePage extends State<ProfilePage> {
             )
     );
   }
-
 
   Widget profileInfo() {
     return SingleChildScrollView(
@@ -553,6 +447,128 @@ class _ProfilePage extends State<ProfilePage> {
       ),
     );
   }
+
+  Future changePassword() {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        final TextEditingController previousPasswordController = TextEditingController();
+        final TextEditingController newPasswordController = TextEditingController();
+        final TextEditingController confirmNewPasswordController = TextEditingController();
+
+        return AlertDialog(
+          backgroundColor: const Color.fromRGBO(248, 237, 227, 1),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          title: const Center(
+            child: Text(
+              'Change Password',
+              style: TextStyle(
+                fontFamily: 'Arial',
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Color.fromRGBO(121, 135, 119, 1),
+              ),
+            ),
+          ),
+          content: Form(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Container(
+                  margin: const EdgeInsets.only(top: 10.0),
+                  child: TextFormField(
+                    controller: previousPasswordController,
+                    decoration: const InputDecoration(
+                      labelText: 'Previous Password',
+                      border: UnderlineInputBorder(),
+
+                    ),
+                    obscureText: true,
+
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your previous password';
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(top: 10.0),
+                  child: TextFormField(
+                    controller: newPasswordController,
+                    decoration: const InputDecoration(
+                      labelText: 'New Password',
+                      border: UnderlineInputBorder(),
+                    ),
+                    obscureText: true,
+
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter a new password';
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(top: 10.0),
+                  child: TextFormField(
+                    controller: confirmNewPasswordController,
+                    decoration: const InputDecoration(
+                      labelText: 'Confirm New Password',
+                      border: UnderlineInputBorder(),
+                    ),
+                    obscureText: true,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please confirm your new password';
+                      } else if (value != newPasswordController.text) {
+                        return 'Passwords do not match';
+                      }
+                      return null;
+                    },
+                  ),
+                )
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              style: TextButton.styleFrom(
+                iconColor: const Color.fromRGBO(121, 135, 119, 1),
+              ),
+              child: const Text(
+                'Cancel',
+                style: TextStyle(
+                  color:  Color.fromRGBO(121, 135, 119, 1)
+                ),
+              ),
+            ),
+            TextButton(
+              onPressed: () => changePasswordButtonPressed(
+                  user!.username, previousPasswordController.text, newPasswordController.text),
+              style: TextButton.styleFrom(
+                backgroundColor: const Color.fromRGBO(121, 135, 119, 1),
+              ),
+              child: const Text(
+                'Confirm',
+                style: TextStyle(
+                    color: Color.fromRGBO(248, 237, 227, 1)
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
 
 
 

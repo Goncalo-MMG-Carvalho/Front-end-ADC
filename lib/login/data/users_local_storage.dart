@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:adc_handson_session/login/domain/User.dart';
+import 'package:adc_handson_session/login/domain/Group.dart';
 import 'dart:async';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -30,6 +31,7 @@ class LocalDB {
     print('onCreate');
     await db.transaction((txn) async {
       await txn.execute('CREATE TABLE users (username TEXT PRIMARY KEY, token TEXT)');
+      await txn.execute('CREATE TABLE groups (groupName TEXT, owner TEXT, PRIMARY KEY(groupName, owner))');
     });
   }
 
@@ -48,6 +50,17 @@ class LocalDB {
 
   }
 
+  Future<void> addGroup(final Group g) async {
+
+    await db.insert(
+      'groups',
+      g.toMap(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+    print(g.toString());
+
+  }
+
   Future<String> getUsername() async {
     final db = await initDB();
     List<Map<String, Object?>> usernameQuery = await db.rawQuery('SELECT username FROM users');
@@ -62,6 +75,13 @@ class LocalDB {
     final token = usernameQuery.first.values.first.toString();
     print(token);
     return token;
+  }
+
+  Future<List<Map<String, Object?>>> getGroups() async {
+    final db = await initDB();
+    List<Map<String, Object?>> groups = await db.rawQuery('SELECT * FROM groups');
+    print(groups);
+    return groups;
   }
 
 

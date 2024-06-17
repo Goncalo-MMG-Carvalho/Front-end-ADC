@@ -3,6 +3,9 @@ import 'package:http/http.dart' as http;
 import 'package:crypto/crypto.dart';
 
 class Authentication {
+  static String BUSINESS = "USER_BUSINESS";
+  static String PERSONAL = "USER_PERSONAL";
+
   static bool isPasswordCompliant(String password, [int minLength = 8]) {
     //Null-safety ensures that password is never null
     if (password.isEmpty) {
@@ -114,6 +117,7 @@ class Authentication {
         'email':email,
         'age': age,
         'name': name,
+        'accountType': PERSONAL
       });
     }else {
       json = jsonEncode(<String, String>{
@@ -122,7 +126,7 @@ class Authentication {
         'email':email,
         'age': age,
         'name': name,
-        'accountType': tipoConta[1]
+        'accountType': BUSINESS
       });
       print(tipoConta[1]);
     }

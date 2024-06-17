@@ -18,12 +18,12 @@ class GroupsPage extends StatefulWidget {
 }
 
 class _GroupsPageState extends State<GroupsPage> {
-  bool _showAddForm = false; // Track whether to show the add form
+  bool _showAddForm = false;
   TextEditingController _groupNameController = TextEditingController();
   TextEditingController _companyNameController = TextEditingController();
-  Color _selectedColor = Colors.blue; // Default color
+  Color _selectedColor = Colors.blue;
 
-  List<Group> _groups = []; // List to store groups
+  List<Group> _groups = [];
 
   @override
   void dispose() {
@@ -47,10 +47,6 @@ class _GroupsPageState extends State<GroupsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Groups Page'),
-          backgroundColor: const Color.fromRGBO(248, 237, 227, 1)
-      ),
       backgroundColor:  const Color.fromRGBO(248, 237, 227, 1), // Change color as desired
       body: SingleChildScrollView(
         child: Column(
@@ -113,11 +109,10 @@ class _GroupsPageState extends State<GroupsPage> {
             ),
             if (_showAddForm)
               _buildAddGroupForm(), // Show form if _showAddForm is true
-            SizedBox(height: 20.0),
+            const SizedBox(height: 20.0),
             // Display added groups using Wrap instead of Row
-            Wrap(
-              spacing: 10.0,
-              runSpacing: 10.0,
+            Column(
+
               children: _groups.map((group) => _buildGroupSquare(group)).toList(),
             ),
           ],
@@ -141,14 +136,14 @@ class _GroupsPageState extends State<GroupsPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(
+          const Text(
             'Add Group',
             style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
           ),
-          SizedBox(height: 10.0),
+          const SizedBox(height: 10.0),
           TextField(
             controller: _groupNameController,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               labelText: 'Group Name',
               border: OutlineInputBorder(),
             ),
@@ -156,16 +151,16 @@ class _GroupsPageState extends State<GroupsPage> {
           SizedBox(height: 20.0),
           TextField(
             controller: _companyNameController,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               labelText: 'Company Name',
               border: OutlineInputBorder(),
             ),
           ),
-          SizedBox(height: 20.0),
+          const SizedBox(height: 20.0),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
+              const Text(
                 'Select Color:',
                 style: TextStyle(fontSize: 16.0),
               ),
@@ -173,14 +168,14 @@ class _GroupsPageState extends State<GroupsPage> {
               // Color picker
               ElevatedButton(
                 onPressed: () => _showColorPicker(context),
-                child: Text('Pick Color'),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: _selectedColor,
                 ),
+                child: const Text('Pick Color'),
               ),
             ],
           ),
-          SizedBox(height: 10.0),
+          const SizedBox(height: 10.0),
           ElevatedButton(
             onPressed: () {
               // Handle form submission
@@ -191,7 +186,7 @@ class _GroupsPageState extends State<GroupsPage> {
               _groupNameController.clear(); // Clear text fields
               _companyNameController.clear();
             },
-            child: Text('Add'),
+            child: const Text('Add'),
           ),
         ],
       ),
@@ -200,7 +195,7 @@ class _GroupsPageState extends State<GroupsPage> {
 
   Widget _buildGroupSquare(Group group) {
     return Container(
-      padding: EdgeInsets.all(12.0),
+      padding: const EdgeInsets.all(12.0),
       width: 200.0, // Fixed width for each group square
       decoration: BoxDecoration(
         color: group.color,
@@ -210,7 +205,7 @@ class _GroupsPageState extends State<GroupsPage> {
             color: Colors.grey.withOpacity(0.5),
             spreadRadius: 1,
             blurRadius: 3,
-            offset: Offset(0, 2), // changes position of shadow
+            offset: const Offset(0, 2), // changes position of shadow
           ),
         ],
       ),
@@ -219,12 +214,12 @@ class _GroupsPageState extends State<GroupsPage> {
         children: [
           Text(
             'Group Name: ${group.groupName}',
-            style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold, color: Colors.white),
+            style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold, color: Colors.white),
           ),
-          SizedBox(height: 8.0),
+          const SizedBox(height: 8.0),
           Text(
             'Company Name: ${group.companyName}',
-            style: TextStyle(fontSize: 16.0, color: Colors.white),
+            style: const TextStyle(fontSize: 16.0, color: Colors.white),
           ),
         ],
       ),
@@ -237,7 +232,7 @@ class _GroupsPageState extends State<GroupsPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Pick a color'),
+          title: const Text('Pick a color'),
           content: SingleChildScrollView(
             child: BlockPicker(
               pickerColor: _selectedColor,
@@ -253,7 +248,7 @@ class _GroupsPageState extends State<GroupsPage> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('Done'),
+              child: const Text('Done'),
             ),
           ],
         );

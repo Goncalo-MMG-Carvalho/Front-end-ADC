@@ -65,7 +65,8 @@ class Authentication {
       token = await db.getToken();
     }
     print(token);
-    finalToken = token.split("u003d")[1];
+    finalToken = token;
+    //finalToken = token.split("u003d")[1];
     print(finalToken);
 
     return finalToken;
