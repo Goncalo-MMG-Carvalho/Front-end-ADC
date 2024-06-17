@@ -103,9 +103,55 @@ class Authentication {
     }
   }
 
-}
+  Future<bool> changePasswordAuthenticate(String username, String oldPassword, String newPassword) async {
+    // Hash the passwords before sending (using sha512 as per your example)
+    var bytesOld = utf8.encode(oldPassword);
+    var encodedOld = sha512.convert(bytesOld);
 
-void main() async {
+    var bytesNew = utf8.encode(newPassword);
+    var encodedNew = sha512.convert(bytesNew);
+
+    // Make an HTTP POST request to change password endpoint
+    final response = await http.post(
+      Uri.parse('https://projeto-adc-423314.ew.r.appspot.com/rest/change_password/v1'),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(<String, String>{
+        'username': username,
+        'oldPassword': encodedOld.toString(),
+        'newPassword': encodedNew.toString()
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      print("Password changed successfully");
+      return true;
+    } else {
+      print("Failed to change password. Error ${response.statusCode}");
+      return false;
+    }
+  }
+
+  bool changePassword(String username, String oldPassword, String newPassword) {
+    //  API Call to authenticate an user (GoogleAppEngine endpoint)
+
+    // Note: hash passwords before sending them through the communication channel
+    // Example: https://pub.dev/packages/hash_password
+
+    // In the meanwhile, if you don't have an endpoint to authenticate users in
+    // Google app Engine, send a POST to https://dummyjson.com/docs/auth.
+    // Body should be a json {'username': <username>, 'password': <password>}
+    // Use username: hbingley1 - password: CQutx25i8r
+    // More info: https://dummyjson.com/docs/auth
+
+    changePasswordAuthenticate(username, oldPassword, newPassword);
+
+    return true;
+  }
+
+  void main() async {
   // Users lists: https://dummyjson.com/users
   //Authentication.fetchAuthenticate("hbingley1", "CQutx25i8r");
+}
 }

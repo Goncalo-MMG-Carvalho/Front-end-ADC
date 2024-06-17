@@ -54,7 +54,7 @@ class _RegisterScreen extends State<RegisterScreen>{
             return const AlertDialog(
               backgroundColor: Color.fromRGBO(248, 237, 227, 1),
               contentPadding: EdgeInsets.all(20),
-              content: Text("Invalid password format!",
+              content: Text("Invalid password format! Needs an Upper Case letter, etc?",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Color.fromRGBO(121, 135, 119, 1),
@@ -422,7 +422,7 @@ class _RegisterScreen extends State<RegisterScreen>{
           child: Align(
           alignment: Alignment.centerLeft,
           child: Text(
-                "Tipo de conta:",
+                "Account type:",
               style: TextStyle(
               fontFamily: 'Arial',
               fontSize: 16,

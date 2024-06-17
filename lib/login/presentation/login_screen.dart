@@ -140,7 +140,7 @@ class _LoginScreenState extends State<LoginScreen> {
           style: ButtonStyle(
             foregroundColor: WidgetStateProperty.all<Color>(const Color.fromRGBO(121, 135, 119, 1)),
           ),
-          child: const Text('New here? Regist'),
+          child: const Text('New here? Register'),
         ),
       ],
     );
