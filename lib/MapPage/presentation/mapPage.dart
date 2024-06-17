@@ -1,12 +1,14 @@
-import 'dart:ffi';
+import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
 import 'package:permission_handler/permission_handler.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 
+import 'package:google_maps_flutter_android/google_maps_flutter_android.dart';
+import 'package:google_maps_flutter_platform_interface/google_maps_flutter_platform_interface.dart';
 
 class MapPage extends StatefulWidget {
   const MapPage({super.key});
@@ -16,15 +18,17 @@ class MapPage extends StatefulWidget {
 }
 
 class _MapPage extends State<MapPage> {
-
   late GoogleMapController mapController;
-  late LatLng _currentLocation;
+  LatLng? _currentLocation;
   bool gotLocation = false;
   final _controller = TextEditingController();
 
   @override
   void initState() {
     super.initState();
+    if (!kIsWeb) {
+      _initializeAndroidMapRenderer();
+    }
     _checkPermissions();
   }
 
@@ -42,42 +46,62 @@ class _MapPage extends State<MapPage> {
   }
 
   Future<void> _getCurrentLocation() async {
-    Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
-    setState(() {
-      _currentLocation = LatLng(position.latitude, position.longitude);
-      gotLocation = true;
-    });
-  }
-
-
-
-  /*
-  void printLocationFromAddress() async {
-    Location location = await getLocationFromAddress("1600 Amphitheatre Parkway, Mountain View, CA");
-    print("Latitude: ${location.latitude}, Longitude: ${location.longitude}");
-  }
-   */
-
-  void _getLatLngFromAddress(String address) async {
     try {
-      print("ADRESS: $address");
-      List<Location> locations = await locationFromAddress(address);
-      print("TEST PASSOU");
-      print("LOCATIONS: " + locations.toString());
+      Position position = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high);
+      setState(() {
+        _currentLocation = LatLng(position.latitude, position.longitude);
+        gotLocation = true;
+      });
+    } catch (e) {
+      print("Error getting current location: $e");
+      // Default location if there's an errortt
+      setState(() {
+        _currentLocation =
+        const LatLng(38.7223, 9.1393); // Default to Lisbon
+        gotLocation = true;
+      });
+    }
+  }
+
+  Future<void> _getLatLngFromAddress(String address) async {
+    try {
+      List<Location> locations;
+        locations = await locationFromAddress(address);
+
+      if (locations.isEmpty) {
+        print("No locations found for the address: $address");
+        return Future.value();
+      }
       Location location = locations.first;
       LatLng newLatLng = LatLng(location.latitude, location.longitude);
-
-      print("LATLNG: $newLatLng");
-      
-      mapController.animateCamera(CameraUpdate.newLatLng(newLatLng)); //set the camera center to given latlng
-      //print("New location = $newLatLng");
+      mapController.animateCamera(CameraUpdate.newLatLng(newLatLng)); // Set the camera center to given LatLng
       setState(() {
         _currentLocation = newLatLng;
       });
+      print("LATLNG: $newLatLng");
     } catch (e) {
-      print(e);
+      print("Error getting location from address: $e");
+      return Future.error(e);
     }
+  }
+
+
+  Future<void> _initializeAndroidMapRenderer() async {
+    final GoogleMapsFlutterPlatform platform = GoogleMapsFlutterPlatform.instance;
+    (platform as GoogleMapsFlutterAndroid).useAndroidViewSurface = true;
+    await _initializeMapRenderer();
+  }
+
+  Future<AndroidMapRenderer?> _initializeMapRenderer() async {
+    Completer<AndroidMapRenderer?> completer = Completer<AndroidMapRenderer?>();
+    WidgetsFlutterBinding.ensureInitialized();
+    final GoogleMapsFlutterPlatform platform = GoogleMapsFlutterPlatform.instance;
+    unawaited((platform as GoogleMapsFlutterAndroid)
+        .initializeWithRenderer(AndroidMapRenderer.latest)
+        .then((AndroidMapRenderer initializedRenderer) =>
+        completer.complete(initializedRenderer)));
+    return completer.future;
   }
 
   @override
@@ -86,36 +110,36 @@ class _MapPage extends State<MapPage> {
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Green Life',
-        debugShowCheckedModeBanner: false,
-        home: DefaultTabController(
-            length: 2,
-            child: Scaffold(
-                appBar: AppBar(
-                  backgroundColor: const Color.fromRGBO(189, 210, 182, 1),
-                  title: Center(
-                    child: Image.asset(
-                      'assets/logo.png', // Replace with your image path
-                      height: 70, // Adjust the height as needed
-                    ),
-                  ),
-                  leading: IconButton(
-                    icon: const Icon(Icons.arrow_back_rounded),
-                    color: const Color.fromRGBO(121, 135, 119, 1),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                ),
-                backgroundColor: const Color.fromRGBO(248, 237, 227, 1),
-                body: Container(
-                  child: gotLocation ?
-                  Column(
-                    children: [Padding(
+      title: 'Green Life',
+      debugShowCheckedModeBanner: false,
+      home: DefaultTabController(
+        length: 2,
+        child: Scaffold(
+          appBar: AppBar(
+            backgroundColor: const Color.fromRGBO(189, 210, 182, 1),
+            title: Center(
+              child: Image.asset(
+                'assets/logo.png', // Replace with your image path
+                height: 70,
+              ),
+            ),
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back_rounded),
+              color: const Color.fromRGBO(121, 135, 119, 1),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+          ),
+          backgroundColor: const Color.fromRGBO(248, 237, 227, 1),
+          body: Container(
+            child: gotLocation
+                ? Column(
+              children: [
+                Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: TextField(
                     controller: _controller,
@@ -123,7 +147,7 @@ class _MapPage extends State<MapPage> {
                       labelText: 'Enter location',
                       border: OutlineInputBorder(),
                     ),
-                    onSubmitted: (value){
+                    onSubmitted: (value) {
                       _getLatLngFromAddress(value);
                     },
                   ),
@@ -132,16 +156,18 @@ class _MapPage extends State<MapPage> {
                   child: GoogleMap(
                     onMapCreated: _onMapCreated,
                     initialCameraPosition: CameraPosition(
-                      target: _currentLocation,
+                      target: _currentLocation ??
+                          const LatLng(0, 0),
                       zoom: 13.0,
                     ),
                   ),
-                )
-                    ])
-                      : const Center(child: CircularProgressIndicator())
-                )
+                ),
+              ],
             )
-        )
+                : const Center(child: CircularProgressIndicator()),
+          ),
+        ),
+      ),
     );
   }
 }
