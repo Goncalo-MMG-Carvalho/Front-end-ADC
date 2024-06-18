@@ -1,3 +1,4 @@
+import 'package:adc_handson_session/AppPage/application/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
@@ -18,17 +19,41 @@ class GroupsPage extends StatefulWidget {
 }
 
 class _GroupsPageState extends State<GroupsPage> {
+  String PERSONAL_ROLE = "USER_PERSONAL";
+
+  String userRole = "";
+
+  Authentication auth = Authentication();
+
   bool _showAddForm = false;
   TextEditingController _groupNameController = TextEditingController();
-  TextEditingController _companyNameController = TextEditingController();
+
+
   Color _selectedColor = Colors.blue;
 
+  bool isPublic = true;
+
+  bool isBusiness = false;
+
+
   List<Group> _groups = [];
+
+  void getUserRole() async {
+    String role = (await auth.getUserRole())!;
+    setState(() {
+      userRole = role;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getUserRole();
+  }
 
   @override
   void dispose() {
     _groupNameController.dispose();
-    _companyNameController.dispose();
     super.dispose();
   }
 
@@ -38,10 +63,17 @@ class _GroupsPageState extends State<GroupsPage> {
     });
   }
 
-  void _addGroup(String groupName, String companyName, Color color) {
-    setState(() {
-      _groups.add(Group(groupName, companyName, color));
-    });
+  void createGroupButtonPressed(String groupName, Color color) {
+    String colorString = color.value.toRadixString(16).padLeft(8, '0');
+
+
+    //VERIFICAR SE È TRUE OR FALSE
+    auth.createGroup(groupName, isPublic, isBusiness, colorString);
+
+
+    //setState(() {
+    //  _groups.add(Group(groupName, colorString));
+    //});
   }
 
   @override
@@ -121,23 +153,33 @@ class _GroupsPageState extends State<GroupsPage> {
     );
   }
 
+
   Widget _buildAddGroupForm() {
     return Container(
+      constraints: BoxConstraints(maxWidth: 400),
       margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
-        color: const Color.fromRGBO(189,210,182,100), // Background color for the form
+        color: const Color.fromRGBO(189,210,182,1), // Background color for the form
         border: Border.all(
-          color: Colors.grey,
+          color: const Color.fromRGBO(121, 135, 119, 1),
           width: 1.0,
         ),
         borderRadius: BorderRadius.circular(8.0),
+        boxShadow:[
+          BoxShadow(
+            color: const Color.fromRGBO(121, 135, 119, 1).withOpacity(0.5), // Shadow color
+            spreadRadius: 5, // Spread radius
+            blurRadius: 7, // Blur radius
+            offset: const Offset(0, 3), // Offset
+          ),
+        ]
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const Text(
-            'Add Group',
+            'Create Group',
             style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 10.0),
@@ -148,30 +190,71 @@ class _GroupsPageState extends State<GroupsPage> {
               border: OutlineInputBorder(),
             ),
           ),
-          SizedBox(height: 20.0),
-          TextField(
-            controller: _companyNameController,
-            decoration: const InputDecoration(
-              labelText: 'Company Name',
-              border: OutlineInputBorder(),
+        const SizedBox(height: 20.0),
+        Column(
+          children: <Widget>[
+            const Padding(padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  "Privacy:",
+                  style: TextStyle(
+                    fontFamily: 'Arial',
+                    fontSize: 16,
+                  ),
+                ),
+              ),
             ),
+            Padding(padding: const EdgeInsets.fromLTRB(20, 0, 20, 5),
+              child: RadioListTile<bool>(
+                title: const Text('Public'),
+                value: true,
+                groupValue: isPublic,
+                activeColor: const Color.fromRGBO(121, 135, 119, 1),
+                onChanged: (value) {
+                  setState(() {
+                    isPublic = value!;
+                  });
+                },
+              ),
+            ),
+            Padding(padding: const EdgeInsets.fromLTRB(20, 0, 20, 5),
+              child: RadioListTile<bool>(
+                  title: const Text('Private'),
+                  value: false,
+                  groupValue: isPublic,
+                  activeColor: const Color.fromRGBO(121, 135, 119, 1),
+                  onChanged: (value) {
+                    setState(() {
+                      isPublic = value!;
+                    });
+              },
+
+              ),
+            )
+          ],
           ),
+
+          if( userRole != PERSONAL_ROLE)
+            groupTypeChoice(),
+
           const SizedBox(height: 20.0),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               const Text(
                 'Select Color:',
                 style: TextStyle(fontSize: 16.0),
               ),
-              SizedBox(width: 10.0),
+            //  const SizedBox(width: 10.0),
               // Color picker
               ElevatedButton(
                 onPressed: () => _showColorPicker(context),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: _selectedColor,
+                  shape: const CircleBorder(),
                 ),
-                child: const Text('Pick Color'),
+                child: const Text(""),
               ),
             ],
           ),
@@ -180,59 +263,85 @@ class _GroupsPageState extends State<GroupsPage> {
             onPressed: () {
               // Handle form submission
               String groupName = _groupNameController.text;
-              String companyName = _companyNameController.text;
-              _addGroup(groupName, companyName, _selectedColor); // Add group to the list
+              createGroupButtonPressed(groupName, _selectedColor);
               _toggleAddForm(); // Hide the form after submission
               _groupNameController.clear(); // Clear text fields
-              _companyNameController.clear();
             },
-            child: const Text('Add'),
+            style: ElevatedButton.styleFrom(
+              backgroundColor:  const Color.fromRGBO(248, 237, 227, 1),
+            ),
+            child: const Text(
+                'Create group',
+              style: TextStyle(
+                color:  Color.fromRGBO(121, 135, 119, 1),
+              ),
+            ),
           ),
         ],
       ),
     );
   }
 
-  Widget _buildGroupSquare(Group group) {
-    return Container(
-      padding: const EdgeInsets.all(12.0),
-      width: 200.0, // Fixed width for each group square
-      decoration: BoxDecoration(
-        color: group.color,
-        borderRadius: BorderRadius.circular(8.0),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            spreadRadius: 1,
-            blurRadius: 3,
-            offset: const Offset(0, 2), // changes position of shadow
+  Widget groupTypeChoice() {
+    return Column(
+      children: <Widget>[
+        const Padding(padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              "Group type:",
+              style: TextStyle(
+                fontFamily: 'Arial',
+                fontSize: 16,
+              ),
+            ),
           ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Group Name: ${group.groupName}',
-            style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold, color: Colors.white),
+        ),
+        Padding(padding: const EdgeInsets.fromLTRB(20, 0, 20, 5),
+          child: RadioListTile<bool>(
+            title: const Text('Personal'),
+            value: false,
+            groupValue: isBusiness,
+            activeColor: const Color.fromRGBO(121, 135, 119, 1),
+            onChanged: (value) {
+              setState(() {
+                isBusiness = value!;
+              });
+            },
           ),
-          const SizedBox(height: 8.0),
-          Text(
-            'Company Name: ${group.companyName}',
-            style: const TextStyle(fontSize: 16.0, color: Colors.white),
+        ),
+        Padding(padding: const EdgeInsets.fromLTRB(20, 0, 20, 5),
+          child: RadioListTile<bool>(
+            title: const Text('Business'),
+            value: true,
+            groupValue: isBusiness,
+            activeColor: const Color.fromRGBO(121, 135, 119, 1),
+            onChanged: (value) {
+              setState(() {
+                isBusiness = value!;
+              });
+            },
+
           ),
-        ],
-      ),
+        )
+      ],
     );
   }
 
   // Method to show color picker dialog
+
   void _showColorPicker(BuildContext context) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Pick a color'),
+          backgroundColor: const Color.fromRGBO(248, 237, 227, 1),
+          title: const Text(
+              'Choose a color',
+              style: TextStyle(
+                color: Color.fromRGBO(121, 135, 119, 1),
+              ),
+          ),
           content: SingleChildScrollView(
             child: BlockPicker(
               pickerColor: _selectedColor,
@@ -248,11 +357,48 @@ class _GroupsPageState extends State<GroupsPage> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: const Text('Done'),
+              style: TextButton.styleFrom(
+                backgroundColor: const Color.fromRGBO(121, 135, 119, 1)
+              ),
+              child: const Text(
+                  'Done',
+                  style: TextStyle(
+                    color: Color.fromRGBO(248, 237, 227, 1),
+                  ),
+              ),
             ),
           ],
         );
       },
     );
   }
+}
+
+Widget _buildGroupSquare(Group group) {
+  return Container(
+    padding: const EdgeInsets.all(12.0),
+    width: 200.0, // Fixed width for each group square
+    decoration: BoxDecoration(
+      color: group.color,
+      borderRadius: BorderRadius.circular(8.0),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.grey.withOpacity(0.5),
+          spreadRadius: 1,
+          blurRadius: 3,
+          offset: const Offset(0, 2), // changes position of shadow
+        ),
+      ],
+    ),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Group Name: ${group.groupName}',
+          style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold, color: Colors.white),
+        ),
+        const SizedBox(height: 8.0),
+      ],
+    ),
+  );
 }

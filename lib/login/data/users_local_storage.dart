@@ -31,14 +31,13 @@ class LocalDB {
     print('onCreate');
     await db.transaction((txn) async {
       await txn.execute('CREATE TABLE users (username TEXT PRIMARY KEY, token TEXT)');
-      await txn.execute('CREATE TABLE groups (groupName TEXT, owner TEXT, PRIMARY KEY(groupName, owner))');
+      await txn.execute('CREATE TABLE groups (groupCode TEXT PRIMARY KEY, groupName TEXT, owner TEXT, color TEXT)');
     });
   }
 
   // TODO: Draft function. You should adapt after extending the user table
   // with its last position
   Future<void> addUser(final User u) async {
-
     // The `conflictAlgorithm` is used to select the strategy to be used in case
     // the user already exists. In this case, replace any previous data.
     await db.insert(
@@ -105,6 +104,7 @@ class LocalDB {
     await deleteDatabase(join(path, databaseName));
   }
 
+  //É PREFERIVEL FAZER DELETE DA DB EM VEZ DE DAR SO DROP TABLE
  // Future<void> restartDB() async {
  //   final db = await initDB();
  //   await db.execute('DROP TABLE IF EXISTS users');

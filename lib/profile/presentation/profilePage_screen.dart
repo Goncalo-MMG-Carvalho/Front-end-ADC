@@ -278,13 +278,11 @@ class _ProfilePage extends State<ProfilePage> {
 
   Widget profileInfo() {
     return SingleChildScrollView(
-      child: Column(
-        children: [
-          Container(
+          child: Container(
             alignment: Alignment.topLeft,
             //margin: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
             child: Row(
-              //crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(
                   flex: 1,
@@ -376,15 +374,13 @@ class _ProfilePage extends State<ProfilePage> {
                   ),
                 ),
                 Expanded(
-                  flex: 1,
+                  //flex: 1,
                   child: Container(
+                    //alignment: Alignment.topRight,
                     padding: const EdgeInsets.only(left: 50.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Container(
-                            margin: const EdgeInsets.only(top: 85.0)
-                        ),
                         Text.rich(
                           TextSpan(
                             children: [
@@ -443,8 +439,6 @@ class _ProfilePage extends State<ProfilePage> {
               ],
             ),
           ),
-        ],
-      ),
     );
   }
 
