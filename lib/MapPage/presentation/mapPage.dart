@@ -18,8 +18,13 @@ class MapPage extends StatefulWidget {
 class _MapPage extends State<MapPage> {
   late GoogleMapController mapController;
   LatLng? _currentLocation;
+  LatLng? _destinationLocation;
   bool gotLocation = false;
+  bool showRouteButton = false;
   final _controller = TextEditingController();
+  Marker? _userMarker;
+  Circle? _userCircle;
+  StreamSubscription<Position>? positionStream;
 
   @override
   void initState() {
@@ -32,27 +37,46 @@ class _MapPage extends State<MapPage> {
 
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
+    _getCurrentLocation();
+    if (_currentLocation != null) {
+      mapController.animateCamera(CameraUpdate.newCameraPosition(
+        CameraPosition(target: _currentLocation!, zoom: 15),
+      ));
+    }
   }
 
   Future<void> _checkPermissions() async {
     if (await Permission.location.request().isGranted) {
-      _getCurrentLocation();
-    } else {
-      // Handle the case if permissions are not granted
-      // You can show a dialog explaining why the app needs location permissions
+      setState(() {
+        gotLocation = true;
+      });
     }
   }
 
   Future<void> _getCurrentLocation() async {
     try {
       Position position = await Geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.high);
+        desiredAccuracy: LocationAccuracy.high,
+      );
+      _updateUserLocation(position);
+
+      const locationSettings = LocationSettings(
+        accuracy: LocationAccuracy.high,
+        distanceFilter: 10,
+      );
+
+      positionStream = Geolocator.getPositionStream(locationSettings: locationSettings)
+          .listen((Position position) {
+        _updateUserLocation(position);
+      });
+
       setState(() {
-        _currentLocation = LatLng(position.latitude, position.longitude);
         gotLocation = true;
       });
     } catch (e) {
-      print("Error getting current location: $e");
+      if (kDebugMode) {
+        print("Error getting current location: $e");
+      }
       // Default location if there's an error
       setState(() {
         _currentLocation = const LatLng(38.7223, -9.1393); // Default to Lisbon
@@ -61,32 +85,79 @@ class _MapPage extends State<MapPage> {
     }
   }
 
-  //Function is not usable on web, will return null value
+  void _updateUserLocation(Position position) {
+    LatLng newLocation = LatLng(position.latitude, position.longitude);
+
+    setState(() {
+      _currentLocation = newLocation;
+      _userMarker = Marker(
+        markerId: const MarkerId("user_marker"),
+        position: newLocation,
+        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure),
+      );
+      _userCircle = Circle(
+        circleId: const CircleId("user_circle"),
+        center: newLocation,
+        radius: 50,
+        strokeColor: Colors.blue,
+        strokeWidth: 2,
+        fillColor: Colors.blue.withOpacity(0.2),
+      );
+    });
+
+    mapController.animateCamera(
+      CameraUpdate.newCameraPosition(
+        CameraPosition(target: newLocation, zoom: 15),
+      ),
+    );
+    }
+
   Future<void> _getLatLngFromAddress(String address) async {
     try {
-      List<Location> locations;
-      if (kIsWeb) {
-        locations = [];
-      } else {
-        locations = await locationFromAddress(address);
-      }
+      List<Location> locations = await locationFromAddress(address);
       if (locations.isEmpty) {
-        print("No locations found for the address: $address");
-        return Future.value();
+        if (kDebugMode) {
+          print("No locations found for the address: $address");
+        }
+        return;
       }
       Location location = locations.first;
       LatLng newLatLng = LatLng(location.latitude, location.longitude);
       CameraPosition newPos = CameraPosition(target: newLatLng, zoom: 13.0);
       mapController.animateCamera(CameraUpdate.newCameraPosition(newPos)); // Set the camera center to given LatLng
       setState(() {
-        _currentLocation = newLatLng;
+        _destinationLocation = newLatLng;
+        showRouteButton = true;
       });
-      print("LATLNG: $newLatLng");
+      if (kDebugMode) {
+        print("LATLNG: $newLatLng");
+      }
     } catch (e) {
-      print("Error getting location from address: $e");
-      return Future.error(e);
+      if (kDebugMode) {
+        print("Error getting location from address: $e");
+      }
     }
   }
+
+  Future<void> _createRoute() async {
+    if (_currentLocation == null || _destinationLocation == null) return;
+
+    // Example implementation: Just draw a line between the two points.
+    // For real-world applications, you might want to use a service like Google Directions API.
+    const PolylineId polylineId = PolylineId('route');
+    final Polyline polyline = Polyline(
+      polylineId: polylineId,
+      color: Colors.blue,
+      points: [_currentLocation!, _destinationLocation!],
+      width: 5,
+    );
+
+    setState(() {
+      _polylines[polylineId] = polyline;
+    });
+  }
+
+  final Map<PolylineId, Polyline> _polylines = {};
 
   Future<void> _initializeAndroidMapRenderer() async {
     final GoogleMapsFlutterPlatform platform = GoogleMapsFlutterPlatform.instance;
@@ -108,6 +179,7 @@ class _MapPage extends State<MapPage> {
   @override
   void dispose() {
     _controller.dispose();
+    positionStream?.cancel();
     super.dispose();
   }
 
@@ -136,38 +208,47 @@ class _MapPage extends State<MapPage> {
             ),
           ),
           backgroundColor: const Color.fromRGBO(248, 237, 227, 1),
-          body: Container(
-            child: gotLocation
-                ? Column(
-              children: [
-                if (!kIsWeb)
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: TextField(
-                      controller: _controller,
-                      decoration: const InputDecoration(
-                        labelText: 'Procurar',
-                        border: OutlineInputBorder(),
-                        prefixIcon: Icon(Icons.search),
-                      ),
-                      onSubmitted: (value) {
-                        _getLatLngFromAddress(value);
-                      },
+          body: gotLocation
+              ? Column(
+            children: [
+              if (!kIsWeb)
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextField(
+                    controller: _controller,
+                    decoration: const InputDecoration(
+                      labelText: 'Procurar',
+                      border: OutlineInputBorder(),
+                      prefixIcon: Icon(Icons.search),
                     ),
-                  ),
-                Expanded(
-                  child: GoogleMap(
-                    onMapCreated: _onMapCreated,
-                    initialCameraPosition: CameraPosition(
-                      target: _currentLocation ?? const LatLng(0, 0),
-                      zoom: 13.0,
-                    ),
+                    onSubmitted: (value) {
+                      _getLatLngFromAddress(value);
+                    },
                   ),
                 ),
-              ],
-            )
-                : const Center(child: CircularProgressIndicator()),
-          ),
+              if (showRouteButton)
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ElevatedButton(
+                    onPressed: _createRoute,
+                    child: const Text('Create Route'),
+                  ),
+                ),
+              Expanded(
+                child: GoogleMap(
+                  onMapCreated: _onMapCreated,
+                  initialCameraPosition: CameraPosition(
+                    target: _currentLocation ?? const LatLng(0, 0),
+                    zoom: 13.0,
+                  ),
+                  markers: _userMarker != null ? {_userMarker!} : {},
+                  circles: _userCircle != null ? {_userCircle!} : {},
+                  polylines: Set<Polyline>.of(_polylines.values),
+                ),
+              ),
+            ],
+          )
+              : const Center(child: CircularProgressIndicator()),
         ),
       ),
     );
