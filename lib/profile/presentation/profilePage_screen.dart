@@ -569,11 +569,11 @@ class _ProfilePage extends State<ProfilePage> {
                             return AlertDialog(
                               backgroundColor: const Color.fromRGBO(248, 237, 227, 1),
                               contentPadding: EdgeInsets.all(20),
-                              content: Text(
+                              content: const Text(
                                 "Current password entered is incorrect.",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                  color: const Color.fromRGBO(121, 135, 119, 1),
+                                  color: Color.fromRGBO(121, 135, 119, 1),
                                   fontSize: 24,
                                   fontWeight: FontWeight.bold,
                                   fontFamily: 'Arial',
@@ -582,10 +582,10 @@ class _ProfilePage extends State<ProfilePage> {
                               ),
                               actions: <Widget>[
                                 TextButton(
-                                  child: Text(
+                                  child: const Text(
                                     'OK',
                                     style: TextStyle(
-                                      color: const Color.fromRGBO(121, 135, 119, 1),
+                                      color: Color.fromRGBO(121, 135, 119, 1),
                                       fontFamily: 'Arial',
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold,
@@ -606,12 +606,12 @@ class _ProfilePage extends State<ProfilePage> {
                       builder: (context) {
                         return AlertDialog(
                           backgroundColor: const Color.fromRGBO(248, 237, 227, 1),
-                          contentPadding: EdgeInsets.all(20),
-                          content: Text(
+                          contentPadding: const EdgeInsets.all(20),
+                          content: const Text(
                             "Invalid password format! Needs an Upper Case letter, etc?",
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              color: const Color.fromRGBO(121, 135, 119, 1),
+                              color: Color.fromRGBO(121, 135, 119, 1),
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
                               fontFamily: 'Arial',
@@ -620,10 +620,10 @@ class _ProfilePage extends State<ProfilePage> {
                           ),
                           actions: <Widget>[
                             TextButton(
-                              child: Text(
+                              child: const Text(
                                 'OK',
                                 style: TextStyle(
-                                  color: const Color.fromRGBO(121, 135, 119, 1),
+                                  color: Color.fromRGBO(121, 135, 119, 1),
                                   fontFamily: 'Arial',
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
@@ -645,11 +645,11 @@ class _ProfilePage extends State<ProfilePage> {
                       return AlertDialog(
                         backgroundColor: const Color.fromRGBO(248, 237, 227, 1),
                         contentPadding: EdgeInsets.all(20),
-                        content: Text(
+                        content: const Text(
                           "Passwords do not match!",
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            color: const Color.fromRGBO(121, 135, 119, 1),
+                            color: Color.fromRGBO(121, 135, 119, 1),
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
                             fontFamily: 'Arial',
@@ -658,10 +658,10 @@ class _ProfilePage extends State<ProfilePage> {
                         ),
                         actions: <Widget>[
                           TextButton(
-                            child: Text(
+                            child: const Text(
                               'OK',
                               style: TextStyle(
-                                color: const Color.fromRGBO(121, 135, 119, 1),
+                                color: Color.fromRGBO(121, 135, 119, 1),
                                 fontFamily: 'Arial',
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
