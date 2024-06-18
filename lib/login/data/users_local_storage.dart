@@ -77,6 +77,12 @@ class LocalDB {
     return token;
   }
 
+  Future<void> deleteToken() async {
+    final db = await initDB();
+    await db.rawDelete('DELETE FROM users');
+    print('Token deleted');
+  }
+
   Future<List<Map<String, Object?>>> getGroups() async {
     final db = await initDB();
     List<Map<String, Object?>> groups = await db.rawQuery('SELECT * FROM groups');

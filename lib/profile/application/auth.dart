@@ -52,15 +52,33 @@ class Authentication {
 
   String finalToken = "";
 
+  static bool isPasswordCompliant(String password, [int minLength = 8]) {
+    //Null-safety ensures that password is never null
+    if (password.isEmpty) {
+      return false;
+    }
+
+    bool hasUppercase = password.contains(RegExp(r'[A-Z]'));
+    bool hasDigits = password.contains(RegExp(r'[0-9]'));
+    bool hasLowercase = password.contains(RegExp(r'[a-z]'));
+    bool hasSpecialCharacters =
+    password.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'));
+    bool hasMinLength = password.length > minLength;
+
+    return hasDigits &
+    hasUppercase &
+    hasLowercase &
+    hasSpecialCharacters &
+    hasMinLength;
+  }
 
 
   Future<String?> getToken() async {
     String token;
     print("TAMOS NO GET TOKEN");
-    if(kIsWeb){
+    if (kIsWeb) {
       token = localStorage.getItem("token")!;
-
-    }else {
+    } else {
       LocalDB db = LocalDB(localDatabaseName);
       token = await db.getToken();
     }
@@ -72,12 +90,21 @@ class Authentication {
     return finalToken;
   }
 
+  Future<void> removeToken() async {
+    print("TAMOS A REMOVER O TOKEN");
+    if (kIsWeb) {
+      localStorage.removeItem("token");
+    } else {
+      LocalDB db = LocalDB(localDatabaseName);
+      await db.deleteToken();
+    }
+  }
+
   Future<userInfo?> getUser() async {
     await getToken();
 
     userInfo? u = await fetchAuthenticate();
     return u;
-
   }
 
   Future<userInfo?> fetchAuthenticate() async {
@@ -93,7 +120,6 @@ class Authentication {
     );
 
     if (response.statusCode == 200) {
-
       userInfo user = userInfo.fromJson(jsonDecode(response.body));
       print(user.role);
       print(user);
@@ -104,23 +130,30 @@ class Authentication {
     }
   }
 
-  Future<bool> changePasswordAuthenticate(String username, String oldPassword, String newPassword) async {
-    // Hash the passwords before sending (using sha512 as per your example)
-    var bytesOld = utf8.encode(oldPassword);
-    var encodedOld = sha512.convert(bytesOld);
+  Future<bool> changePasswordAuthenticate(String username, String oldPassword, String newPassword, String token) async {
+    // Retrieve current user info
+    userInfo? currentUser = await getUser();
+
+    var bytesP = utf8.encode(oldPassword);
+    var encodedP = sha512.convert(bytesP);
+
+    // Check if the old password matches the current password
+    if (currentUser != null && currentUser.password != encodedP.toString()) {
+      print("Current password entered is incorrect.");
+      return false;
+    }
 
     var bytesNew = utf8.encode(newPassword);
     var encodedNew = sha512.convert(bytesNew);
 
     // Make an HTTP POST request to change password endpoint
     final response = await http.post(
-      Uri.parse('https://projeto-adc-423314.ew.r.appspot.com/rest/change_password/v1'),
+      Uri.parse('https://projeto-adc-423314.ew.r.appspot.com/rest/password_change/v1'),
       headers: <String, String>{
         'Content-Type': 'application/json',
       },
       body: jsonEncode(<String, String>{
-        'username': username,
-        'oldPassword': encodedOld.toString(),
+        'cookie': token,
         'newPassword': encodedNew.toString()
       }),
     );
@@ -134,25 +167,14 @@ class Authentication {
     }
   }
 
-  bool changePassword(String username, String oldPassword, String newPassword) {
-    //  API Call to authenticate an user (GoogleAppEngine endpoint)
-
-    // Note: hash passwords before sending them through the communication channel
-    // Example: https://pub.dev/packages/hash_password
-
-    // In the meanwhile, if you don't have an endpoint to authenticate users in
-    // Google app Engine, send a POST to https://dummyjson.com/docs/auth.
-    // Body should be a json {'username': <username>, 'password': <password>}
-    // Use username: hbingley1 - password: CQutx25i8r
-    // More info: https://dummyjson.com/docs/auth
-
-    changePasswordAuthenticate(username, oldPassword, newPassword);
-
-    return true;
+  Future<bool> changePassword(String username, String oldPassword, String newPassword, String token) async {
+    bool authenticationResult = await changePasswordAuthenticate(username, oldPassword, newPassword, token);
+    return authenticationResult;
   }
 
+
   void main() async {
-  // Users lists: https://dummyjson.com/users
-  //Authentication.fetchAuthenticate("hbingley1", "CQutx25i8r");
-}
+    // Users lists: https://dummyjson.com/users
+    //Authentication.fetchAuthenticate("hbingley1", "CQutx25i8r");
+  }
 }
