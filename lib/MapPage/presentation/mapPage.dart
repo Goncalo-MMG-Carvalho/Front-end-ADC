@@ -198,13 +198,15 @@ class _MapPage extends State<MapPage> {
       'AIzaSyBqOT9eOL5T49H89B4539h4zbiy0OpP0sE',
       PointLatLng(startLatitude, startLongitude),
       PointLatLng(destinationLatitude, destinationLongitude),
-      travelMode: TravelMode.transit,
+      travelMode: TravelMode.driving,
     );
 
+    polylineCoordinates.clear();
+
     if(result.points.isNotEmpty) {
-      result.points.forEach((PointLatLng point) {
+      for (var point in result.points) {
         polylineCoordinates.add(LatLng(point.latitude, point.longitude));
-      });
+      }
     }
 
     PolylineId id = const PolylineId('poly');
@@ -215,14 +217,11 @@ class _MapPage extends State<MapPage> {
       points: polylineCoordinates,
       width: 3,
     );
-
     // Adding the polyline to the map
-    polylines[id] = polyline;
-
-    setState(() {});
+    setState(() {
+      polylines[id] = polyline;
+    });
   }
-
-  final Map<PolylineId, Polyline> _polylines = {};
 
   @override
   void dispose() {
