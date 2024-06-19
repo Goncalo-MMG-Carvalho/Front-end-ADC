@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:adc_handson_session/login/domain/User.dart';
 import 'package:adc_handson_session/login/domain/Group.dart';
+import 'package:adc_handson_session/login/domain/GroupInfo.dart';
 import 'dart:async';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -31,6 +32,7 @@ class LocalDB {
     print('onCreate');
     await db.transaction((txn) async {
       await txn.execute('CREATE TABLE users (username TEXT PRIMARY KEY, token TEXT)');
+      await txn.execute('CREATE TABLE groupsInfo (groupName TEXT PRIMARY KEY, color TEXT)');
       await txn.execute('CREATE TABLE groups (groupCode TEXT PRIMARY KEY, groupName TEXT, owner TEXT, color TEXT)');
     });
   }
@@ -57,6 +59,17 @@ class LocalDB {
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
     print(g.toString());
+
+  }
+
+  Future<void> addGroupInfo(final GroupInfo gi) async {
+
+    await db.insert(
+      'groupsInfo',
+      gi.toMap(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+    print(gi.toString());
 
   }
 
@@ -110,9 +123,4 @@ class LocalDB {
     await deleteDatabase(join(path, databaseName));
   }
 
-  //É PREFERIVEL FAZER DELETE DA DB EM VEZ DE DAR SO DROP TABLE
- // Future<void> restartDB() async {
- //   final db = await initDB();
- //   await db.execute('DROP TABLE IF EXISTS users');
- // }
 }

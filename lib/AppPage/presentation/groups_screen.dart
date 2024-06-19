@@ -1,6 +1,9 @@
 import 'package:adc_handson_session/AppPage/application/auth.dart';
+import 'package:adc_handson_session/login/domain/GroupInfo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+
+import 'appPage_screen.dart';
 
 // Define a model class for a Group
 class Group {
@@ -35,8 +38,10 @@ class _GroupsPageState extends State<GroupsPage> {
 
   bool isBusiness = false;
 
+  bool isLoading = true;
 
-  List<Group> _groups = [];
+
+  List<GroupInfo> _groups = [];
 
   void getUserRole() async {
     String role = (await auth.getUserRole())!;
@@ -49,6 +54,7 @@ class _GroupsPageState extends State<GroupsPage> {
   void initState() {
     super.initState();
     getUserRole();
+    addGroupsInfo();
   }
 
   @override
@@ -63,13 +69,30 @@ class _GroupsPageState extends State<GroupsPage> {
     });
   }
 
-  void createGroupButtonPressed(String groupName, Color color) {
+  Future<void> addGroupsInfo() async {
+    _groups = (await auth.getGroups())!;
+
+    setState(() {
+      isLoading = false;
+    });
+    print(_groups);
+  }
+
+
+
+  Future<void> createGroupButtonPressed(String groupName, Color color) async {
     String colorString = color.value.toRadixString(16).padLeft(8, '0');
 
 
     //VERIFICAR SE È TRUE OR FALSE
-    auth.createGroup(groupName, isPublic, isBusiness, colorString);
+    bool verfication = await auth.createGroup(groupName, isPublic, isBusiness, colorString);
 
+    if(verfication) {
+      setState(() {
+        isLoading = true;
+      });
+      addGroupsInfo();
+    }
 
     //setState(() {
     //  _groups.add(Group(groupName, colorString));
@@ -80,7 +103,12 @@ class _GroupsPageState extends State<GroupsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor:  const Color.fromRGBO(248, 237, 227, 1), // Change color as desired
-      body: SingleChildScrollView(
+      body: isLoading
+          ? const Center(
+    // Display a loading indicator or message while loading
+          child: CircularProgressIndicator(),
+          )
+        : SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
@@ -156,7 +184,7 @@ class _GroupsPageState extends State<GroupsPage> {
 
   Widget _buildAddGroupForm() {
     return Container(
-      constraints: BoxConstraints(maxWidth: 400),
+      constraints: const BoxConstraints(maxWidth: 400),
       margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
@@ -374,12 +402,18 @@ class _GroupsPageState extends State<GroupsPage> {
   }
 }
 
-Widget _buildGroupSquare(Group group) {
+Widget _buildGroupSquare(GroupInfo group) {
+
+  Color getGroupColor(String color) {
+    int colorValue = int.parse(color, radix: 16);
+    return Color(colorValue);
+  }
+
   return Container(
     padding: const EdgeInsets.all(12.0),
     width: 200.0, // Fixed width for each group square
     decoration: BoxDecoration(
-      color: group.color,
+      color: getGroupColor(group.color),
       borderRadius: BorderRadius.circular(8.0),
       boxShadow: [
         BoxShadow(
