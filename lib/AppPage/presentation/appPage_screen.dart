@@ -1,4 +1,6 @@
+import 'package:adc_handson_session/AppPage/presentation/groups_screen.dart';
 import 'package:adc_handson_session/MapPage/presentation/mapPage.dart';
+import 'package:adc_handson_session/profile/presentation/profilePage_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'homeUserPage_screen.dart';
@@ -48,7 +50,11 @@ class _AppPage extends State<AppPage> {
                   icon: const Icon(Icons.person),
                   color: const Color.fromRGBO(121, 135, 119, 1),
                   onPressed: () {
-                    //TODO
+                    Navigator.push( //responsavel por passar para a outra pagina (mainScreen), pilha que empilha as paginas acessadas, podendo assim voltar a tras nas paginas
+                      context,
+                      MaterialPageRoute(builder: (context) => const ProfilePage()),
+                      //MaterialPageRoute(builder: (context) => const AppPage()),
+                    );
                   },
                 ),
               ],
@@ -57,7 +63,7 @@ class _AppPage extends State<AppPage> {
             body: TabBarView(
               children: [
                 Container(child: const HomePage()),//PAGINAS A FAZER
-                Container(child: const Icon(Icons.directions_transit))//PAGINAS A FAZER
+                Container(child: const GroupsPage())//PAGINAS A FAZER
               ],
             ),
             backgroundColor: const Color.fromRGBO(248, 237, 227, 1),

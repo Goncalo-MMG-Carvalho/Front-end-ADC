@@ -3,6 +3,9 @@ import 'package:http/http.dart' as http;
 import 'package:crypto/crypto.dart';
 
 class Authentication {
+  static String BUSINESS = "USER-BUSINESS";
+  static String PERSONAL = "Personal";
+
   static bool isPasswordCompliant(String password, [int minLength = 8]) {
     //Null-safety ensures that password is never null
     if (password.isEmpty) {
@@ -104,8 +107,6 @@ class Authentication {
     var bytesP = utf8.encode(password);
     var encodedP = sha512.convert(bytesP);
 
-    //print(tipo);
-
     var tipoConta = tipo.split(".");
     String json;
 
@@ -124,16 +125,14 @@ class Authentication {
         'email':email,
         'idade': age,
         'name': name,
-        'accountType': tipoConta[1]
+        'accountType': BUSINESS
       });
       print(tipoConta[1]);
     }
 
     final response = await http.post(
       Uri.parse('https://projeto-adc-423314.ew.r.appspot.com/rest/register/v3'),
-      //Uri.parse('http://localhost:8080/rest/register/v3'),
       headers: <String, String>{
-    //    'Access-Control-Allow-Origin' : '*',
         'Content-Type': 'application/json',
       },
 

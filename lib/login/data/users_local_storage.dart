@@ -1,5 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:adc_handson_session/login/domain/User.dart';
+import 'package:adc_handson_session/login/domain/Group.dart';
+import 'package:adc_handson_session/login/domain/GroupInfo.dart';
 import 'dart:async';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -14,7 +16,7 @@ class LocalDB {
 
   Future<Database> initDB() async {
     WidgetsFlutterBinding.ensureInitialized();
-
+    print("ENTRAMOS NO INIT");
     String path = await getDatabasesPath();
 
     db = await openDatabase(
@@ -29,14 +31,15 @@ class LocalDB {
   Future<void> _onCreate(Database db, int version) async {
     print('onCreate');
     await db.transaction((txn) async {
-      await txn.execute('CREATE TABLE users (username TEXT PRIMARY KEY, email TEXT, lastLogin INTEGER)');
+      await txn.execute('CREATE TABLE users (username TEXT PRIMARY KEY, token TEXT)');
+      await txn.execute('CREATE TABLE groupsInfo (groupName TEXT PRIMARY KEY, color TEXT)');
+      await txn.execute('CREATE TABLE groups (groupCode TEXT PRIMARY KEY, groupName TEXT, owner TEXT, color TEXT)');
     });
   }
 
   // TODO: Draft function. You should adapt after extending the user table
   // with its last position
   Future<void> addUser(final User u) async {
-
     // The `conflictAlgorithm` is used to select the strategy to be used in case
     // the user already exists. In this case, replace any previous data.
     await db.insert(
@@ -44,7 +47,61 @@ class LocalDB {
       u.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
+    print(u.toString());
+
   }
+
+  Future<void> addGroup(final Group g) async {
+
+    await db.insert(
+      'groups',
+      g.toMap(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+    print(g.toString());
+
+  }
+
+  Future<void> addGroupInfo(final GroupInfo gi) async {
+
+    await db.insert(
+      'groupsInfo',
+      gi.toMap(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+    print(gi.toString());
+
+  }
+
+  Future<String> getUsername() async {
+    final db = await initDB();
+    List<Map<String, Object?>> usernameQuery = await db.rawQuery('SELECT username FROM users');
+    final username = usernameQuery.first.values.first.toString();
+    print(username);
+    return username;
+  }
+
+  Future<String> getToken() async {
+    final db = await initDB();
+    List<Map<String, Object?>> usernameQuery = await db.rawQuery('SELECT token FROM users');
+    final token = usernameQuery.first.values.first.toString();
+    print(token);
+    return token;
+  }
+
+  Future<void> deleteToken() async {
+    final db = await initDB();
+    await db.rawDelete('DELETE FROM users');
+    print('Token deleted');
+  }
+
+  Future<List<Map<String, Object?>>> getGroups() async {
+    final db = await initDB();
+    List<Map<String, Object?>> groups = await db.rawQuery('SELECT * FROM groups');
+    print(groups);
+    return groups;
+  }
+
 
   Future<int> countUsers() async {
     final db = await initDB();
@@ -59,4 +116,11 @@ class LocalDB {
     final tables = await db.rawQuery('SELECT * FROM sqlite_master ORDER BY name;');
     print(tables);
   }
+
+  Future<void> deleteDB() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    String path = await getDatabasesPath();
+    await deleteDatabase(join(path, databaseName));
+  }
+
 }

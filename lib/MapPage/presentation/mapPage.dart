@@ -1,4 +1,4 @@
-import 'dart:ffi';
+//import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 
@@ -110,6 +110,12 @@ class _MapPage extends State<MapPage> {
                       Navigator.pop(context);
                     },
                   ),
+                  actions: [
+                    Container(
+                      //PARA O LOGO FICAR CENTRADO (PODE HAVER UMA MANEIRA MELHOR)
+                      padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                    )
+                  ],
                 ),
                 backgroundColor: const Color.fromRGBO(248, 237, 227, 1),
                 body: Container(
