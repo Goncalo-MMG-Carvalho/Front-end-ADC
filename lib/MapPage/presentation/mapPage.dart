@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:google_maps_flutter_android/google_maps_flutter_android.dart';
 import 'package:google_maps_flutter_platform_interface/google_maps_flutter_platform_interface.dart';
 
 class MapPage extends StatefulWidget {
@@ -22,22 +22,21 @@ class _MapPage extends State<MapPage> {
   bool gotLocation = false;
   bool showRouteButton = false;
   final _controller = TextEditingController();
-  Marker? _userMarker;
-  Circle? _userCircle;
   StreamSubscription<Position>? positionStream;
+  Set<Marker> markers = {};
+  late PolylinePoints polylinePoints;
+  List<LatLng> polylineCoordinates = [];
+  Map<PolylineId, Polyline> polylines = {};
 
   @override
   void initState() {
     super.initState();
-    if (!kIsWeb) {
-      _initializeAndroidMapRenderer();
-    }
     _checkPermissions();
   }
 
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
-    _getCurrentLocation();
+    _updateUserLocation();
     if (_currentLocation != null) {
       mapController.animateCamera(CameraUpdate.newCameraPosition(
         CameraPosition(target: _currentLocation!, zoom: 15),
@@ -48,6 +47,7 @@ class _MapPage extends State<MapPage> {
   Future<void> _checkPermissions() async {
     if (await Permission.location.request().isGranted) {
       setState(() {
+        _getCurrentLocation();
         gotLocation = true;
       });
     }
@@ -58,20 +58,10 @@ class _MapPage extends State<MapPage> {
       Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high,
       );
-      _updateUserLocation(position);
-
-      const locationSettings = LocationSettings(
-        accuracy: LocationAccuracy.high,
-        distanceFilter: 10,
-      );
-
-      positionStream = Geolocator.getPositionStream(locationSettings: locationSettings)
-          .listen((Position position) {
-        _updateUserLocation(position);
-      });
+      LatLng newLocation = LatLng(position.latitude, position.longitude);
 
       setState(() {
-        gotLocation = true;
+        _currentLocation = newLocation;
       });
     } catch (e) {
       if (kDebugMode) {
@@ -80,37 +70,41 @@ class _MapPage extends State<MapPage> {
       // Default location if there's an error
       setState(() {
         _currentLocation = const LatLng(38.7223, -9.1393); // Default to Lisbon
-        gotLocation = true;
       });
     }
   }
 
-  void _updateUserLocation(Position position) {
-    LatLng newLocation = LatLng(position.latitude, position.longitude);
-
-    setState(() {
-      _currentLocation = newLocation;
-      _userMarker = Marker(
-        markerId: const MarkerId("user_marker"),
-        position: newLocation,
-        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure),
+  void _updateUserLocation() {
+    try {
+      _getCurrentLocation();
+      const locationSettings = LocationSettings(
+        accuracy: LocationAccuracy.high,
+        distanceFilter: 10,
       );
-      _userCircle = Circle(
-        circleId: const CircleId("user_circle"),
-        center: newLocation,
-        radius: 50,
-        strokeColor: Colors.blue,
-        strokeWidth: 2,
-        fillColor: Colors.blue.withOpacity(0.2),
-      );
-    });
 
-    mapController.animateCamera(
-      CameraUpdate.newCameraPosition(
-        CameraPosition(target: newLocation, zoom: 15),
-      ),
-    );
+      positionStream =
+          Geolocator.getPositionStream(locationSettings: locationSettings)
+              .listen((Position position) {
+            LatLng newLocation = LatLng(position.latitude, position.longitude);
+            setState(() {
+              _currentLocation = newLocation;
+            });
+          });
+
+      setState(() {
+        gotLocation = true;
+      });
     }
+    catch (e) {
+      if (kDebugMode) {
+        print("Error updating user location: $e");
+      }
+      // Default location if there's an error
+      setState(() {
+        _currentLocation = const LatLng(38.7223, -9.1393); // Default to Lisbon
+      });
+    }
+  }
 
   Future<void> _getLatLngFromAddress(String address) async {
     try {
@@ -142,39 +136,93 @@ class _MapPage extends State<MapPage> {
   Future<void> _createRoute() async {
     if (_currentLocation == null || _destinationLocation == null) return;
 
-    // Example implementation: Just draw a line between the two points.
-    // For real-world applications, you might want to use a service like Google Directions API.
-    const PolylineId polylineId = PolylineId('route');
-    final Polyline polyline = Polyline(
-      polylineId: polylineId,
-      color: Colors.blue,
-      points: [_currentLocation!, _destinationLocation!],
-      width: 5,
+    Marker startMarker = Marker(
+      markerId: const MarkerId('Initial'),
+      position: _currentLocation!,
+      infoWindow: const InfoWindow(
+        title: 'Start Location',
+        snippet: 'This is the starting point',
+      ),
+      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure),
     );
 
-    setState(() {
-      _polylines[polylineId] = polyline;
-    });
+    Marker destinationMarker = Marker(
+      markerId: const MarkerId('Destination'),
+      position: _destinationLocation!,
+      infoWindow: const InfoWindow(
+        title: 'Destination',
+        snippet: 'This is the destination',
+      ),
+      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
+    );
+
+    markers.add(startMarker);
+    markers.add(destinationMarker);
+
+    double startLatitude = _currentLocation!.latitude;
+    double startLongitude =_currentLocation!.longitude;
+    double destinationLatitude = _destinationLocation!.latitude;
+    double destinationLongitude = _destinationLocation!.longitude;
+    double miny = (startLatitude <= destinationLatitude)
+        ? startLatitude
+        : destinationLatitude;
+    double minx = (startLongitude <= destinationLongitude)
+        ? startLongitude
+        : destinationLongitude;
+    double maxy = (startLatitude <= destinationLatitude)
+        ? destinationLatitude
+        : startLatitude;
+    double maxx = (startLongitude <= destinationLongitude)
+        ? destinationLongitude
+        : startLongitude;
+
+    double southWestLatitude = miny;
+    double southWestLongitude = minx;
+
+    double northEastLatitude = maxy;
+    double northEastLongitude = maxx;
+
+    mapController.animateCamera(
+      CameraUpdate.newLatLngBounds(
+        LatLngBounds(
+          northeast: LatLng(northEastLatitude, northEastLongitude),
+          southwest: LatLng(southWestLatitude, southWestLongitude),
+        ),
+        100.0,
+      ),
+    );
+
+    polylinePoints = PolylinePoints();
+
+    PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+      'AIzaSyBqOT9eOL5T49H89B4539h4zbiy0OpP0sE',
+      PointLatLng(startLatitude, startLongitude),
+      PointLatLng(destinationLatitude, destinationLongitude),
+      travelMode: TravelMode.transit,
+    );
+
+    if(result.points.isNotEmpty) {
+      result.points.forEach((PointLatLng point) {
+        polylineCoordinates.add(LatLng(point.latitude, point.longitude));
+      });
+    }
+
+    PolylineId id = const PolylineId('poly');
+
+    Polyline polyline = Polyline(
+      polylineId: id,
+      color: Colors.red,
+      points: polylineCoordinates,
+      width: 3,
+    );
+
+    // Adding the polyline to the map
+    polylines[id] = polyline;
+
+    setState(() {});
   }
 
   final Map<PolylineId, Polyline> _polylines = {};
-
-  Future<void> _initializeAndroidMapRenderer() async {
-    final GoogleMapsFlutterPlatform platform = GoogleMapsFlutterPlatform.instance;
-    (platform as GoogleMapsFlutterAndroid).useAndroidViewSurface = true;
-    await _initializeMapRenderer();
-  }
-
-  Future<AndroidMapRenderer?> _initializeMapRenderer() async {
-    Completer<AndroidMapRenderer?> completer = Completer<AndroidMapRenderer?>();
-    WidgetsFlutterBinding.ensureInitialized();
-    final GoogleMapsFlutterPlatform platform = GoogleMapsFlutterPlatform.instance;
-    unawaited((platform as GoogleMapsFlutterAndroid)
-        .initializeWithRenderer(AndroidMapRenderer.latest)
-        .then((AndroidMapRenderer initializedRenderer) =>
-        completer.complete(initializedRenderer)));
-    return completer.future;
-  }
 
   @override
   void dispose() {
@@ -237,13 +285,16 @@ class _MapPage extends State<MapPage> {
               Expanded(
                 child: GoogleMap(
                   onMapCreated: _onMapCreated,
+                  myLocationButtonEnabled: true,
+                  myLocationEnabled: true,
+                  zoomGesturesEnabled: kIsWeb ? false : true,
+                  zoomControlsEnabled: true,
                   initialCameraPosition: CameraPosition(
-                    target: _currentLocation ?? const LatLng(0, 0),
+                    target: _currentLocation ?? const LatLng(38.7223, -9.1393),
                     zoom: 13.0,
                   ),
-                  markers: _userMarker != null ? {_userMarker!} : {},
-                  circles: _userCircle != null ? {_userCircle!} : {},
-                  polylines: Set<Polyline>.of(_polylines.values),
+                  markers: Set<Marker>.from(markers),
+                  polylines: Set<Polyline>.of(polylines.values),
                 ),
               ),
             ],

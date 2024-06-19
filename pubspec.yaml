@@ -54,6 +54,7 @@ dependencies:
   google_maps_routes: any
   google_maps_flutter_android: any
   google_maps_flutter_platform_interface: any
+  flutter_polyline_points: ^1.0.0
 
 dev_dependencies:
   flutter_test:
