@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "937310044902",
+    "project_id": "projeto-adc-423314",
+    "storage_bucket": "projeto-adc-423314.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:937310044902:android:6c3db6494063d678ce7127",
+        "android_client_info": {
+          "package_name": "com.example.adc_handson_session"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": ""
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

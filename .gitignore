@@ -1,0 +1,12 @@
+/build/
+/.idea/
+/.dart_tool/
+pubspec.lock
+/android/.gradle/*
+/android/local.properties
+/ios/Flutter/Generated.xcconfig
+/ios/Flutter/flutter_export_environment.sh
+/macos/Flutter/ephemeral/*
+.flutter-plugins
+.flutter-plugins-dependencies
+/windows/flutter/ephemeral/*
